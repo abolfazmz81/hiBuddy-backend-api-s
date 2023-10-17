@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aOgpc6u/oPKSHeleKwZvr8IAWTJ//PjDfmGgMkLP6LxcYmzElxerbgqKrhn2Ih5cf9VHUl2U3gqLPNDI7krurw==",
+  "dgSpecHash": "lDedxQ3dAia/U+rvmS/TKAIyduVa1h+TZ+YZ/nfvYu3OsK93HdA0gciBabLiJFm3Y8cRotXng8BGjBM/NA58vw==",
   "success": true,
-  "projectFilePath": "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
+  "projectFilePath": "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\scot flop\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\scot flop\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

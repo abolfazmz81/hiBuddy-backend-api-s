@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj": {}
+    "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj": {}
   },
   "projects": {
-    "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj": {
+    "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
+        "projectUniqueName": "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
         "projectName": "hiBuddy",
-        "projectPath": "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
+        "projectPath": "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\hiBuddy.csproj",
         "packagesPath": "C:\\Users\\scot flop\\.nuget\\packages\\",
-        "outputPath": "E:\\takalif daneshgah\\tahlil\\project\\hiBuddy\\obj\\",
+        "outputPath": "E:\\takalif_daneshgah\\tahlil\\project\\hiBuddy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\scot flop\\AppData\\Roaming\\NuGet\\NuGet.Config"

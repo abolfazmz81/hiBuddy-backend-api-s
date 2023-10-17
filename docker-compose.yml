@@ -1,0 +1,8 @@
+version: '7.0'
+
+services:
+  webapp:
+    image: hibuddy-final
+    ports:
+      - 80
+      - 443
