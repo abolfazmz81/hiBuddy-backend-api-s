@@ -1,202 +1,134 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using hiBuddy.Data;
 using hiBuddy.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
-namespace hiBuddy.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class UserManagementController : ControllerBase
+namespace hiBuddy.Controllers
 {
-    private String connectionstring = "data source=DESKTOP-QN1UJLM;initial catalog=HiBuddy;trusted_connection=true;TrustServerCertificate=True";
-    
-    [HttpGet]
-    public IActionResult GetUser(int id)
+    [ApiController]
+    [Route("[controller]")]
+    public class UserManagementController : ControllerBase
     {
-        UserManagement user = new UserManagement();
-        try
-        {
-            using (SqlConnection connection = new SqlConnection(connectionstring))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand("select * from Hibuddy_user where user_id = @p1 ",connection)
-                )
-                {
-                    cmd.Parameters.AddWithValue("@p1", id);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        reader.Read();
-                        
-                        
-                        user.user_id = reader.GetInt32(0);
-                        
-                        user.username = reader.GetString(1);
-                        
-                        user.profilename = reader.GetString(2);
-                        
-                        user.job = reader.GetString(5);
-                        
-                        
-                        user.education = reader.GetString(6);
-                        connection.Close();
-                        return Ok(user);
-                    }
-                }
+        private readonly HiBuddyContext _context;
 
-                
-            }
-        }
-        catch (Exception e)
+        public UserManagementController(HiBuddyContext context)
         {
-            Console.WriteLine(e.ToString());
-            return BadRequest("no such id exists");
-            throw;
-            
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var user = await _context.Hibuddy_user.FindAsync(id);
+
+            if (user == null)
+            {
+                return BadRequest("No such id exists");
+            }
+
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser(UserManagement user)
+        {
+            if (_context.Hibuddy_user.Any(u => u.username == user.username))
+            {
+                return BadRequest("User with this username already exists!");
+            }
+
+            SHA256 sha256 = SHA256.Create();
+            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
+            byte[] hasBytes = sha256.ComputeHash(codeBytes);
+            StringBuilder hashed = new StringBuilder();
+            for (int i = 0; i < hasBytes.Length; i++)
+            {
+                hashed.Append(hasBytes[i].ToString("X2"));
+            }
+            user.user_password = hashed.ToString();
+
+            _context.Hibuddy_user.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Inserted successfully");
         }
         
-    }
+        [HttpDelete]
+        public async Task<IActionResult> DelUser(int id)
+        {
+            var user = await _context.Hibuddy_user.FindAsync(id);
 
-    [HttpPost]
-    public IActionResult AddUser(String username,String profile_name,String pic,String user_password,String job,String education)
-    {
-        UserManagement user = new UserManagement();
-        try
-        {
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            if (user == null)
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand("insert into Hibuddy_user (username,profile_name,pic,user_password,job,education) values (@username, @profile_name,NULL,@pass,@job,@education); ",connection)
-                      )
-                {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@profile_name", profile_name);
-                    SHA256 sha256 = SHA256.Create();
-                    
-                    Byte[] codeBytes = Encoding.UTF8.GetBytes(user_password);
-                    Byte[] hasBytes = sha256.ComputeHash(codeBytes);
-                    StringBuilder hashed = new StringBuilder();
-                    for (int i = 0; i < hasBytes.Length; i++)
-                    {
-                        hashed.Append(hasBytes[i].ToString("X2"));
-                    }
-                    cmd.Parameters.AddWithValue("@pass", hashed.ToString());
-                    cmd.Parameters.AddWithValue("@job", job);
-                    cmd.Parameters.AddWithValue("@education", education);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        return Ok("inserted successfully");
-                    }
-                    catch (Exception e)
-                    {
-                        
-                        //Console.WriteLine(e);
-                        return BadRequest("user with this username already exists!");
-                        throw;
-                    }
-                }
-                
+                return BadRequest("No such id exists");
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return BadRequest("no such id exists");
-            throw;
-            
-        }
-    }
-    
-    [HttpDelete]
-    public IActionResult DelUser(int id)
-    {
-        UserManagement user = new UserManagement();
-        try
-        {
-            using (SqlConnection connection = new SqlConnection(connectionstring))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand("delete from Hibuddy_user where user_id = @p1 ",connection)
-                      )
-                {
-                    cmd.Parameters.AddWithValue("@p1", id);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        return Ok("row deleted successfully");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        return BadRequest("the row didnt exist");
-                        throw;
-                    }
-                }
 
-                
-            }
+            _context.Hibuddy_user.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Row deleted successfully");
         }
-        catch (Exception e)
+
+        [HttpPut]
+        public async Task<IActionResult> EditUser(UserManagement user)
         {
-            Console.WriteLine(e.ToString());
-            return BadRequest("no such id exists");
-            throw;
             
-        }
-        
-    }
-    
-    [HttpPut]
-    public IActionResult editUser(int id,String username,String profile_name,String pic,String user_password,String job,String education)
-    {
-        UserManagement user = new UserManagement();
-        try
-        {
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            var dbUser = await _context.Hibuddy_user.FindAsync(user.user_id);
+            if (dbUser == null)
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand("update Hibuddy_user Set username=@username,profile_name=@profile_name,pic=NULL,user_password= @pass,job=@job,education=@education where user_id = @id; ",connection)
-                      )
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@profile_name", profile_name);
-                    SHA256 sha256 = SHA256.Create();
-                    
-                    Byte[] codeBytes = Encoding.UTF8.GetBytes(user_password);
-                    Byte[] hasBytes = sha256.ComputeHash(codeBytes);
-                    StringBuilder hashed = new StringBuilder();
-                    for (int i = 0; i < hasBytes.Length; i++)
-                    {
-                        hashed.Append(hasBytes[i].ToString("X2"));
-                    }
-                    cmd.Parameters.AddWithValue("@pass", hashed.ToString());
-                    cmd.Parameters.AddWithValue("@job", job);
-                    cmd.Parameters.AddWithValue("@education", education);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        return Ok("inserted successfully");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        return BadRequest("the chosen username already exists");
-                        throw;
-                    }
-                }
-                
+                return NotFound("User not found");
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return BadRequest("no such id exists");
-            throw;
+            if (_context.Hibuddy_user.Any(u => u.username == user.username && u.user_id != user.user_id))
+            {
+                return BadRequest("The chosen username already exists");
+            }
+
             
+
+            dbUser.username = user.username;
+            dbUser.profile_name = user.profile_name;
+            dbUser.pic = user.pic;
+            dbUser.education = user.education;
+            dbUser.job = user.job;
+            
+            SHA256 sha256 = SHA256.Create();
+            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
+            byte[] hasBytes = sha256.ComputeHash(codeBytes);
+            StringBuilder hashed = new StringBuilder();
+            for (int i = 0; i < hasBytes.Length; i++)
+            {
+                hashed.Append(hasBytes[i].ToString("X2"));
+            }
+            dbUser.user_password = hashed.ToString();
+            
+            _context.Entry(dbUser).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HibuddyUserExists(dbUser.user_id))
+                {
+                    return NotFound("User not found");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok("Updated successfully");
+        }
+
+        private bool HibuddyUserExists(int id)
+        {
+            return _context.Hibuddy_user.Any(e => e.user_id == id);
         }
     }
-    
 }
