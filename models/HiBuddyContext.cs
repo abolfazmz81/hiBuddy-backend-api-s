@@ -5,11 +5,12 @@ namespace hiBuddy.Data
 {
     public class HiBuddyContext : DbContext
     {
+        public HiBuddyContext() {}
         public HiBuddyContext(DbContextOptions<HiBuddyContext> options) : base(options)
         {
         }
 
-        public DbSet<UserManagement> Hibuddy_user { get; set; }
+        public virtual DbSet<UserManagement> Hibuddy_user { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

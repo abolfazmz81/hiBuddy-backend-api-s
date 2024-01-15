@@ -21,21 +21,22 @@ namespace hiBuddy.Controllers
             _context = context;
         }
 
-        [HttpGet]
+       [HttpGet]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _context.Hibuddy_user.FindAsync(id);
 
             if (user == null)
             {
-                return BadRequest("No such id exists");
+                return NotFound("No such id exists");
             }
 
             return Ok(user);
         }
-
+        
+        
         [HttpPost]
-        public async Task<IActionResult> AddUser(UserManagement user)
+        public virtual async Task<IActionResult> AddUser(UserManagement user)
         {
             if (_context.Hibuddy_user.Any(u => u.username == user.username))
             {
@@ -51,11 +52,11 @@ namespace hiBuddy.Controllers
                 hashed.Append(hasBytes[i].ToString("X2"));
             }
             user.user_password = hashed.ToString();
-
+            
             _context.Hibuddy_user.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok("Inserted successfully");
+            return Ok(user);
         }
         
         [HttpDelete]
@@ -65,7 +66,7 @@ namespace hiBuddy.Controllers
 
             if (user == null)
             {
-                return BadRequest("No such id exists");
+                    return NotFound("No such id exists");
             }
 
             _context.Hibuddy_user.Remove(user);
@@ -75,11 +76,10 @@ namespace hiBuddy.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditUser(UserManagement user)
+        public virtual async Task<IActionResult> EditUser(UserManagement user)
         {
             
-            var dbUser = await _context.Hibuddy_user.FindAsync(user.user_id);
-            if (dbUser == null)
+            if (!_context.Hibuddy_user.Any(u => u.user_id == user.user_id))
             {
                 return NotFound("User not found");
             }
@@ -87,14 +87,9 @@ namespace hiBuddy.Controllers
             {
                 return BadRequest("The chosen username already exists");
             }
-
             
-
-            dbUser.username = user.username;
-            dbUser.profile_name = user.profile_name;
-            dbUser.pic = user.pic;
-            dbUser.education = user.education;
-            dbUser.job = user.job;
+            
+            UserManagement test = user;
             
             SHA256 sha256 = SHA256.Create();
             byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
@@ -104,16 +99,16 @@ namespace hiBuddy.Controllers
             {
                 hashed.Append(hasBytes[i].ToString("X2"));
             }
-            dbUser.user_password = hashed.ToString();
+            test.user_password = hashed.ToString();
+            _context.Hibuddy_user.Update(test);
             
-            _context.Entry(dbUser).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HibuddyUserExists(dbUser.user_id))
+                if (!HibuddyUserExists(test.user_id))
                 {
                     return NotFound("User not found");
                 }
@@ -123,10 +118,10 @@ namespace hiBuddy.Controllers
                 }
             }
 
-            return Ok("Updated successfully");
+            return Ok(user);
         }
 
-        private bool HibuddyUserExists(int id)
+        public virtual bool HibuddyUserExists(int id)
         {
             return _context.Hibuddy_user.Any(e => e.user_id == id);
         }

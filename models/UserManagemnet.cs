@@ -11,7 +11,7 @@ namespace hiBuddy.Models
         public int user_id { get; set; }
         
         public String username { get; set; }
-        public String profile_name { get; set; }
+        public String? profile_name { get; set; }
         public String user_password { get; set; }
         
         public String? job { get; set; }
@@ -19,7 +19,7 @@ namespace hiBuddy.Models
         
         public String? pic { get; set; }
         
-        //public String geography { get; set; }
+        public String email { get; set; }
         
         //public String x { get; set; }
         
