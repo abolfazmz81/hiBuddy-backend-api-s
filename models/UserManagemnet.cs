@@ -20,10 +20,6 @@ namespace hiBuddy.Models
         public String? pic { get; set; }
         
         public String email { get; set; }
-        
-        //public String x { get; set; }
-        
-        //public String y { get; set; }
 
     }
 }
