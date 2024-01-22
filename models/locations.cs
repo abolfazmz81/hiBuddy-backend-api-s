@@ -13,9 +13,8 @@ namespace hiBuddy.Models
         [Key]
         public int location_id { get; set; }
         
-        public int x { get; set; }
-        public int y { get; set; }
-        public string loc { get; set; }
+        public double x { get; set; }
+        public double y { get; set; }
         public string loc_description { get; set; }
     }
 }

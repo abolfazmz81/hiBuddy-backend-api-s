@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections;
+using System.Security.Cryptography;
 using System.Text;
 using hiBuddy.Data;
 using hiBuddy.models;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 
 namespace hiBuddy.Controllers
@@ -23,16 +25,28 @@ namespace hiBuddy.Controllers
         }
 
        [HttpGet]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetNearUser(userLocationCompositeModel compositeModel)
         {
-            var user = await _context.Hibuddy_user.FindAsync(id);
-
-            if (user == null)
+            UserManagement user = compositeModel.User;
+            //.WriteLine("here");
+           // Console.WriteLine(user);
+            var allusers = _context.user_locations.FromSqlRaw("with us(id,ax,ay) as (select Hibuddy_user.user_id,x,y from Hibuddy_user join user_locations on Hibuddy_user.user_id = user_locations.user_id join locations on user_locations.location_id = locations.location_id where Hibuddy_user.user_id = "+user.user_id+ ")\nselect * from user_locations as t where t.user_id in (select s.user_id from us, Hibuddy_user as s join user_locations on s.user_id = user_locations.user_id join locations on user_locations.location_id = locations.location_id where s.user_id != us.id and SQRT(POWER(x-ax,2) + POWER(y-ay,2)) <= 0.025)  \n");
+            //Console.WriteLine("here 2");
+            ArrayList all = new ArrayList();
+            
+            foreach (var x in allusers.ToList())
             {
-                return NotFound("No such id exists");
+                //Console.WriteLine(x.ToJson());
+                UserManagement a = await _context.Hibuddy_user.FindAsync(x.user_id);
+                locations b = await _context.locations.FindAsync(x.location_id);
+                userLocationCompositeModel c = new userLocationCompositeModel();
+                a.password = "none";
+                c.User = a;
+                c.Locations = b;
+                all.Add(c);
             }
 
-            return Ok(user);
+            return Ok(all);
         }
         
         
@@ -47,14 +61,14 @@ namespace hiBuddy.Controllers
             }
 
             SHA256 sha256 = SHA256.Create();
-            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
+            byte[] codeBytes = Encoding.UTF8.GetBytes(user.password);
             byte[] hasBytes = sha256.ComputeHash(codeBytes);
             StringBuilder hashed = new StringBuilder();
             for (int i = 0; i < hasBytes.Length; i++)
             {
                 hashed.Append(hasBytes[i].ToString("X2"));
             }
-            user.user_password = hashed.ToString();
+            user.password = hashed.ToString();
             
             _context.Hibuddy_user.Add(user);
             await _context.SaveChangesAsync();
@@ -102,22 +116,6 @@ namespace hiBuddy.Controllers
             {
                 return BadRequest("The chosen username already exists");
             }
-
-            
-            
-            //UserManagement test = user;
-            
-            SHA256 sha256 = SHA256.Create();
-            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
-            byte[] hasBytes = sha256.ComputeHash(codeBytes);
-            StringBuilder hashed = new StringBuilder();
-            for (int i = 0; i < hasBytes.Length; i++)
-            {
-                hashed.Append(hasBytes[i].ToString("X2"));
-            }
-            user.user_password = hashed.ToString();
-            
-
             if (local != null)
             {
 
@@ -133,7 +131,7 @@ namespace hiBuddy.Controllers
                 }
                 else
                 {
-                    if (_context.locations.FindAsync(local.location_id) == null)
+                    if (!_context.locations.Any(u => u.location_id == local.location_id))
                     {
                         return BadRequest("location id invalid");
                     }
@@ -155,12 +153,13 @@ namespace hiBuddy.Controllers
 
             compositeModel.User = user;
             compositeModel.Locations = local;
+            var res = GetNearUser(compositeModel);
+            var res1 = (OkObjectResult)res.Result;
+            var res2 = res1.Value;
+            compositeModel.OtherLocation = (ArrayList)res2;
+
             return Ok(compositeModel);
         }
-
-        public virtual bool HibuddyUserExists(int id)
-        {
-            return _context.Hibuddy_user.Any(e => e.user_id == id);
-        }
+        
     }
 }
