@@ -15,6 +15,7 @@ namespace hiBuddy.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class UserManagementController : ControllerBase
     {
         private readonly HiBuddyContext _context;
@@ -23,8 +24,13 @@ namespace hiBuddy.Controllers
         {
             _context = context;
         }
-
-       [HttpGet]
+        /// <summary>
+        /// find and sends back all the user near the input user
+        /// </summary>
+        /// <returns> all near users </returns>
+        /// <response code="200"> found the users </response>
+        [Produces("application/json")]
+        [HttpGet]
         public async Task<IActionResult> GetNearUser(userLocationCompositeModel compositeModel)
         {
             UserManagement user = compositeModel.User;
@@ -40,7 +46,7 @@ namespace hiBuddy.Controllers
                 UserManagement a = await _context.Hibuddy_user.FindAsync(x.user_id);
                 locations b = await _context.locations.FindAsync(x.location_id);
                 userLocationCompositeModel c = new userLocationCompositeModel();
-                a.password = "none";
+                a.user_password = "none";
                 c.User = a;
                 c.Locations = b;
                 all.Add(c);
@@ -49,7 +55,13 @@ namespace hiBuddy.Controllers
             return Ok(all);
         }
         
-        
+        /// <summary>
+        /// used for sign up in our website
+        /// </summary>
+        /// <return> information that got stored </return>
+        /// <response code="200"> successfull signup </response>
+        /// <response code="400"> user or email already being used</response>
+        [Produces("application/json")]
         [HttpPost]
         public virtual async Task<IActionResult> AddUser(userLocationCompositeModel compositeModel)
         {
@@ -61,21 +73,28 @@ namespace hiBuddy.Controllers
             }
 
             SHA256 sha256 = SHA256.Create();
-            byte[] codeBytes = Encoding.UTF8.GetBytes(user.password);
+            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
             byte[] hasBytes = sha256.ComputeHash(codeBytes);
             StringBuilder hashed = new StringBuilder();
             for (int i = 0; i < hasBytes.Length; i++)
             {
                 hashed.Append(hasBytes[i].ToString("X2"));
             }
-            user.password = hashed.ToString();
+            user.user_password = hashed.ToString();
             
             _context.Hibuddy_user.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(user);
+            compositeModel.User = user;
+            compositeModel.Locations = loc;
+            return Ok(compositeModel);
         }
         
+        /// <summary>
+        /// used for deleting your account
+        /// </summary>
+        /// <response code="200"> successfull delete </response>
+        /// <response code="404"> given user doent exits</response>
         [HttpDelete]
         public async Task<IActionResult> DelUser(userLocationCompositeModel compositeModel)
         {
@@ -102,7 +121,14 @@ namespace hiBuddy.Controllers
             
             return Ok("Row deleted successfully");
         }
-
+        
+        /// <summary>
+        /// used for editing users information
+        /// </summary>
+        /// <response code="200"> information successfully changed </response>
+        /// <response code="404"> given user doent exits</response>
+        /// <response code="400"> the chosen username already exist and its not yours</response>
+        [Produces("application/json")]
         [HttpPut]
         public virtual async Task<IActionResult> EditUser(userLocationCompositeModel compositeModel)
         {

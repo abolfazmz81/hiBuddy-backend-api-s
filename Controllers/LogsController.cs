@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections;
+using System.Security.Cryptography;
 using System.Text;
 using hiBuddy.Data;
 using hiBuddy.models;
@@ -12,6 +13,7 @@ namespace hiBuddy.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class LogsController : ControllerBase
     {
         private readonly HiBuddyContext _context;
@@ -20,7 +22,24 @@ namespace hiBuddy.Controllers
         {
             _context = context;
         }
-        [HttpGet]
+        
+        /// <summary>
+        /// used for ligin
+        /// </summary>
+        /// <returns> information for logged user </returns>
+        /// <response code="200"> correct email and password </response>
+        /// <response code="404"> given email doesnt exist </response>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Logs
+        ///     {
+        ///        "email": "example@gmail.com",
+        ///        "password": "goodpassword"
+        ///     }
+        ///
+        /// </remarks> 
+        [HttpPost]
         public async Task<IActionResult> Login(Logs login)
         {
             
@@ -28,7 +47,7 @@ namespace hiBuddy.Controllers
             
             if (user.ToList().Count == 0)
             {
-                return NotFound("username doesnt exists");
+                return NotFound("email doesnt exists");
             }
             SHA256 sha256 = SHA256.Create();
             byte[] codeBytes = Encoding.UTF8.GetBytes(login.password);
@@ -41,7 +60,7 @@ namespace hiBuddy.Controllers
             login.password = hashed.ToString();
             UserManagement suser = user.ToList()[0];
             
-            if (login.password.Equals(user.ToList()[0].password))
+            if (login.password.Equals(user.ToList()[0].user_password))
             {
                 var userloc = _context.user_locations.FromSqlRaw("select * from user_locations where user_id = " + suser.user_id);
                 userLocationCompositeModel compositeModel = new userLocationCompositeModel();
@@ -54,6 +73,28 @@ namespace hiBuddy.Controllers
             }
 
             return BadRequest("incorrect password");
+        }
+        
+        
+        /// <summary>
+        /// returns all available users
+        /// </summary>
+        /// <returns> information for all users </returns>
+        /// <response code="200"> no internal error </response>
+        [HttpPut]
+        public async Task<IActionResult> getAllUser()
+        {
+            var users = _context.Hibuddy_user.FromSqlRaw("select * from Hibuddy_user;");
+            ArrayList all = new ArrayList();
+            foreach (var user in users)
+            {
+                userLocationCompositeModel compositeModel = new userLocationCompositeModel();
+                compositeModel.User = user;
+                all.Add(compositeModel);
+            }
+            
+            return Ok(all);
+
         }
 
         
