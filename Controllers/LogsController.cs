@@ -24,7 +24,7 @@ namespace hiBuddy.Controllers
         }
         
         /// <summary>
-        /// used for ligin
+        /// used for login
         /// </summary>
         /// <returns> information for logged user </returns>
         /// <response code="200"> correct email and password </response>
