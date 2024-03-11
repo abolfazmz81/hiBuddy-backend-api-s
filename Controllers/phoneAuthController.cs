@@ -42,12 +42,12 @@ namespace hiBuddy.Controllers
             
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost:6379");
             IDatabase db = redis.GetDatabase();
+            
             db.StringSet(auth.phone_number.ToString(),rand);
+            db.KeyExpire(auth.phone_number.ToString(),newDate.AddMinutes(1));
             Console.WriteLine(rand);
-            Console.WriteLine("db");
-            Console.WriteLine(db.StringGet(auth.phone_number.ToString()));
-            Console.WriteLine(newDate.ToString());
-            return Ok("text generated");
+            
+            return Ok("code generated");
         }
 
         [HttpPut]
