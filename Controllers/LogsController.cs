@@ -75,7 +75,6 @@ namespace hiBuddy.Controllers
             return BadRequest("incorrect password");
         }
         
-        
         /// <summary>
         /// returns all available users
         /// </summary>

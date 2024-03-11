@@ -163,7 +163,7 @@ namespace hiBuddy.Controllers
                     }
                     _context.locations.Update(local);
                     await _context.SaveChangesAsync();
-
+                    
                 }
             }
             _context.Hibuddy_user.Update(user);
