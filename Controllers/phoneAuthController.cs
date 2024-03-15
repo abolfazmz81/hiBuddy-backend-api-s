@@ -45,7 +45,7 @@ namespace hiBuddy.Controllers
             
             db.StringSet(auth.phone_number.ToString(),rand);
             db.KeyExpire(auth.phone_number.ToString(),newDate.AddMinutes(1));
-            Console.WriteLine(rand);
+            Tools.Logger("new code '" + rand + "' generated for sign up");
             
             return Ok("code generated");
         }
