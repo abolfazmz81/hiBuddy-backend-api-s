@@ -1,10 +1,16 @@
-﻿namespace hiBuddy.Controllers;
+﻿using Microsoft.Extensions.Logging;
+
+namespace hiBuddy.Controllers;
 
 public class Tools
 {
-    public static void Logger(String message)
+ 
+
+  
+    public static void Logger(String message,String category)
     {
-        DateTime dateTime = DateTime.Now;
-        Console.WriteLine(dateTime + "- " + message);
+        using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+        ILogger logger = factory.CreateLogger(category);
+        logger.LogInformation(message);
     }
 }
