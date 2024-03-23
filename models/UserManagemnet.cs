@@ -10,9 +10,9 @@ namespace hiBuddy.Models
         [Key]
         public int user_id { get; set; }
         public String username { get; set; }
-        public int? phone_number { get; set; }
-        public String? profile_name { get; set; }        
-        public String? user_password { get; set; }
+        public long phone_number { get; set; }
+        public String? name { get; set; }        
+        public String? password { get; set; }
         public String? job { get; set; }
         public String? education { get; set; }        
         public String? pic { get; set; }        

@@ -46,7 +46,7 @@ namespace hiBuddy.Controllers
                 UserManagement a = await _context.Hibuddy_user.FindAsync(x.user_id);
                 locations b = await _context.locations.FindAsync(x.location_id);
                 userLocationCompositeModel c = new userLocationCompositeModel();
-                a.user_password = "none";
+                a.password = "none";
                 c.User = a;
                 c.Locations = b;
                 all.Add(c);
@@ -73,14 +73,14 @@ namespace hiBuddy.Controllers
             }
 
             SHA256 sha256 = SHA256.Create();
-            byte[] codeBytes = Encoding.UTF8.GetBytes(user.user_password);
+            byte[] codeBytes = Encoding.UTF8.GetBytes(user.password);
             byte[] hasBytes = sha256.ComputeHash(codeBytes);
             StringBuilder hashed = new StringBuilder();
             for (int i = 0; i < hasBytes.Length; i++)
             {
                 hashed.Append(hasBytes[i].ToString("X2"));
             }
-            user.user_password = hashed.ToString();
+            user.password = hashed.ToString();
             
             _context.Hibuddy_user.Add(user);
             await _context.SaveChangesAsync();

@@ -60,7 +60,7 @@ namespace hiBuddy.Controllers
             login.password = hashed.ToString();
             UserManagement suser = user.ToList()[0];
             
-            if (login.password.Equals(user.ToList()[0].user_password))
+            if (login.password.Equals(user.ToList()[0].password))
             {
                 var userloc = _context.user_locations.FromSqlRaw("select * from user_locations where user_id = " + suser.user_id);
                 userLocationCompositeModel compositeModel = new userLocationCompositeModel();
