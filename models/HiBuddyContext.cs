@@ -16,7 +16,7 @@ namespace hiBuddy.Data
         public virtual DbSet<userloc> user_locations{ get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"data source=DESKTOP-QN1UJLM;initial catalog=HiBuddy;trusted_connection=true;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"data source=localhost, 1434;initial catalog=HiBuddy;user id=sa;password=Scotflop1381;TrustServerCertificate=True");
         }
     }
 }
