@@ -1,6 +1,13 @@
-﻿namespace IAM.Application;
+﻿using IAM.Application.AuthenticationService;
+using Microsoft.Extensions.DependencyInjection;
 
-public class DependencyInjection
+namespace IAM.Application;
+
+public static class DependencyInjection
 {
-    
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        services.AddScoped<IRegisterService, RegisterService>();
+        return services;
+    }
 }
