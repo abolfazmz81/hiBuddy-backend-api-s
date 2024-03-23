@@ -1,0 +1,6 @@
+﻿services:
+  iam.presentation:
+    image: iam.presentation
+    build:
+      context: .
+      dockerfile: IAM.Presentation/Dockerfile

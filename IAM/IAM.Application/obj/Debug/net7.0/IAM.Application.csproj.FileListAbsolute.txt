@@ -1,0 +1,15 @@
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\bin\Debug\net7.0\IAM.Application.deps.json
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\bin\Debug\net7.0\IAM.Application.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\bin\Debug\net7.0\IAM.Application.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\bin\Debug\net7.0\IAM.Domain.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\bin\Debug\net7.0\IAM.Domain.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.csproj.AssemblyReference.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.AssemblyInfoInputs.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.AssemblyInfo.cs
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.csproj.CoreCompileInputs.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.csproj.CopyComplete
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\refint\IAM.Application.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\IAM.Application.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Application\obj\Debug\net7.0\ref\IAM.Application.dll

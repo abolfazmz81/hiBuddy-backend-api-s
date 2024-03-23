@@ -1,0 +1,111 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "IAM.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "IAM.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/IAM.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IAM.Application.dll": {}
+        }
+      },
+      "IAM.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/IAM.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IAM.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IAM.Application/1.0.0": {
+      "type": "project",
+      "path": "../IAM.Application/IAM.Application.csproj",
+      "msbuildProject": "../IAM.Application/IAM.Application.csproj"
+    },
+    "IAM.Domain/1.0.0": {
+      "type": "project",
+      "path": "../IAM.Domain/IAM.Domain.csproj",
+      "msbuildProject": "../IAM.Domain/IAM.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "IAM.Application >= 1.0.0",
+      "IAM.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\scot flop\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Infrastructure\\IAM.Infrastructure.csproj",
+      "projectName": "IAM.Infrastructure",
+      "projectPath": "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Infrastructure\\IAM.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\scot flop\\.nuget\\packages\\",
+      "outputPath": "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Infrastructure\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\scot flop\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Application\\IAM.Application.csproj": {
+              "projectPath": "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Application\\IAM.Application.csproj"
+            },
+            "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Domain\\IAM.Domain.csproj": {
+              "projectPath": "E:\\takalif_daneshgah\\software engineering\\project\\hiBuddy-backend-api-s\\IAM\\IAM.Domain\\IAM.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

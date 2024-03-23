@@ -1,0 +1,17 @@
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Infrastructure.deps.json
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Infrastructure.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Infrastructure.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Application.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Domain.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Application.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\bin\Debug\net7.0\IAM.Domain.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.csproj.AssemblyReference.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.AssemblyInfoInputs.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.AssemblyInfo.cs
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.csproj.CoreCompileInputs.cache
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.csproj.CopyComplete
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\refint\IAM.Infrastructure.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\IAM.Infrastructure.pdb
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Infrastructure\obj\Debug\net7.0\ref\IAM.Infrastructure.dll

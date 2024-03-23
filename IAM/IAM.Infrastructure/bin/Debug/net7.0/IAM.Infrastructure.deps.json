@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "IAM.Infrastructure/1.0.0": {
+        "dependencies": {
+          "IAM.Application": "1.0.0",
+          "IAM.Domain": "1.0.0"
+        },
+        "runtime": {
+          "IAM.Infrastructure.dll": {}
+        }
+      },
+      "IAM.Application/1.0.0": {
+        "dependencies": {
+          "IAM.Domain": "1.0.0"
+        },
+        "runtime": {
+          "IAM.Application.dll": {}
+        }
+      },
+      "IAM.Domain/1.0.0": {
+        "runtime": {
+          "IAM.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IAM.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "IAM.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "IAM.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
