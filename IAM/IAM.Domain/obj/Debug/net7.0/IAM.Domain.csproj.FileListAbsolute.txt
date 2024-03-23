@@ -9,3 +9,4 @@ E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.
 E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Domain\obj\Debug\net7.0\refint\IAM.Domain.dll
 E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Domain\obj\Debug\net7.0\IAM.Domain.pdb
 E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Domain\obj\Debug\net7.0\ref\IAM.Domain.dll
+E:\takalif_daneshgah\software engineering\project\hiBuddy-backend-api-s\IAM\IAM.Domain\obj\Debug\net7.0\IAM.Domain.csproj.AssemblyReference.cache
