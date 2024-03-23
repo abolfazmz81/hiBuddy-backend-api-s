@@ -3,11 +3,15 @@ using System.Configuration;
 using Swashbuckle.AspNetCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using IAM.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplication();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
