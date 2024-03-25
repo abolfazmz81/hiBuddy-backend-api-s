@@ -1,17 +1,30 @@
 ﻿using IAM.Application.common;
+using IAM.Infrastructure.CodeGenerator;
+using IAM.Infrastructure.Logger;
 
 namespace IAM.Infrastructure.InMemoryRepository;
 
 public class InMemoryRepository : IInMemoryRepository
 {
-    private readonly String _db;
-    
-    public void Add(string key)
+    private readonly IInmemoryContext _db;
+    private readonly ICodeGenerator _codeGenerator;
+    private readonly IMLogger _logger;
+
+    public InMemoryRepository(IInmemoryContext db, ICodeGenerator codeGenerator, IMLogger logger)
     {
-        throw new NotImplementedException();
+        _db = db;
+        _codeGenerator = codeGenerator;
+        _logger = logger;
     }
 
-    public string? Check(string key,String value)
+    public void Add(string key)
+    {
+        String code = _codeGenerator.Generator();
+        _db.Set(key,code);
+        _logger.Log("new code '" + code + "' generated for sign up","AuthPhoneRegister");
+    }
+
+    public Boolean Check(string key,String value)
     {
         throw new NotImplementedException();
     }
