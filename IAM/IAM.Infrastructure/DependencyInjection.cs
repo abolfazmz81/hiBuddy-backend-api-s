@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddScoped<IInMemoryRepository, InMemoryRepository.InMemoryRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IMLogger, Logger.Logger>();
+        services.AddDbContext<SQLServerContext>();
         return services;
     }
 }
