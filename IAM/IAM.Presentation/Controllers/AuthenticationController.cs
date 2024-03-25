@@ -11,22 +11,41 @@ namespace IAM.Presentation.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IRegisterService _registerService;
+    private readonly IAuthPhoneRegister _authPhoneRegister;
 
-    public AuthenticationController(IRegisterService registerService)
+    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister)
     {
         _registerService = registerService;
+        _authPhoneRegister = authPhoneRegister;
     }
-
+    
+    
     [HttpPost("register")]
-    public ActionResult Register(User user)
+    public ActionResult Register(PhoneAuth phoneAuth)
     {
-        var result = _registerService.Handle(user);
-        return Ok(result);
+        Boolean result = _authPhoneRegister.handle(phoneAuth);
+        if (!result)
+        {
+            return BadRequest("phone number already exists");
+        }
+        return Ok("code generated");
     }
 
     [HttpPut("TwoStep")]
     public ActionResult TwoStep()
     {
         return Ok();
+    }
+    
+    
+    [HttpPost("AddUser")]
+    public ActionResult AddUser(User user)
+    {
+        var result = _registerService.Handle(user);
+        if (result is null)
+        {
+            return BadRequest("user already exists");
+        }
+        return Ok(result);
     }
 }
