@@ -4,5 +4,5 @@ namespace IAM.Application.AuthenticationService;
 
 public interface IRegisterService
 {
-    AuthResult Handle(User user);
+    AuthResult? Handle(User user);
 }

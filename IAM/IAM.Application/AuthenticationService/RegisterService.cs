@@ -5,8 +5,7 @@ namespace IAM.Application.AuthenticationService;
 public class RegisterService : IRegisterService
 {
     
-    
-    public AuthResult Handle(User user)
+    public AuthResult? Handle(User user)
     {
         // check if user exists
     
