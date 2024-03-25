@@ -19,7 +19,7 @@ public class AuthenticationController : ControllerBase
         _authPhoneRegister = authPhoneRegister;
     }
     
-    
+    // phone number related
     [HttpPost("register")]
     public ActionResult Register(PhoneAuth phoneAuth)
     {
@@ -32,12 +32,21 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPut("TwoStep")]
-    public ActionResult TwoStep()
+    public ActionResult TwoStep(PhoneAuth phoneAuth)
     {
-        return Ok();
+        if (phoneAuth.pass is null)
+        {
+            return BadRequest("didnt send the code");
+        }
+        Boolean result = _authPhoneRegister.verify(phoneAuth);
+        if (!result)
+        {
+            return BadRequest("wrong code");
+        }
+        return Ok("phone verified");
     }
     
-    
+    // extra information related
     [HttpPost("AddUser")]
     public ActionResult AddUser(User user)
     {

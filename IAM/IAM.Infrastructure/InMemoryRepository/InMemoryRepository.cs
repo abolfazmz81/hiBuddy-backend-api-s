@@ -26,6 +26,7 @@ public class InMemoryRepository : IInMemoryRepository
 
     public Boolean Check(string key,String value)
     {
-        throw new NotImplementedException();
+        String? dbvalue = _db.Get(key);
+        return dbvalue is not null && dbvalue.Equals(value);
     }
 }
