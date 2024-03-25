@@ -3,5 +3,5 @@
 public interface IInMemoryRepository
 {
     void Add(String key);
-    String? Check(String key,String value);
+    Boolean Check(String key,String value);
 }
