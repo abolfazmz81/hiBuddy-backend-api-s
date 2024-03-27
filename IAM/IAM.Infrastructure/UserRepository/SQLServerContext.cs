@@ -1,7 +1,7 @@
 ﻿using IAM.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace IAM.Infrastructure;
+namespace IAM.Infrastructure.UserRepository;
 
 public class SQLServerContext : DbContext
 {
