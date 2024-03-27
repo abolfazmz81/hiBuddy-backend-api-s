@@ -1,4 +1,5 @@
-﻿using IAM.Application.AuthenticationService;
+﻿using System.IdentityModel.Tokens.Jwt;
+using IAM.Application.AuthenticationService;
 using IAM.Application.common;
 using IAM.Domain;
 
@@ -17,26 +18,31 @@ public class UserManagement : IUserManagement
         _hasher = hasher;
     }
 
-    public Boolean DeleteUser(AuthResult details)
+    public String DeleteUser(AuthResult details)
     {
         // check if user exists
         User? user = _userRepository.GetByUsername(details.User.username);
         if (user is null)
         {
-            return false;
+            return "not exists";
+        }
+        // check token calidation
+        if (user.username.Equals(_jwtGenerator.GetUsername(details.Token)))
+        {
+            return "invalid token";
         }
         // check if password is provided
         if (details.User.password is null)
         {
-            return false;
+            return "no password";
         }
         // check if pass is correct
         if (user.password.Equals(_hasher.Hash(details.User.password)))
         {
-            return true;
+            return "ok";
         }
 
-        return false;
+        return "wrong password";
     }
 
     public AuthResult? UpdateUser(AuthResult details)

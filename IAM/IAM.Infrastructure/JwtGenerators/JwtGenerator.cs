@@ -31,4 +31,16 @@ public class JwtGenerator : IJwtGenerator
         String tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
         return tokenValue;
     }
+
+    public string GetUsername(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var tokens = handler.ReadJwtToken(token);
+        if (tokens is null)
+        {
+            return null;
+        }
+        var res = tokens.Claims.First(c => c.Type.Equals("sub")).Value;
+        return res;
+    }
 }
