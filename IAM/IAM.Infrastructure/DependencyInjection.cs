@@ -1,5 +1,6 @@
 ﻿using IAM.Application.common;
 using IAM.Infrastructure.CodeGenerator;
+using IAM.Infrastructure.hasher;
 using IAM.Infrastructure.InMemoryRepository;
 using IAM.Infrastructure.Logger;
 
@@ -16,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IInMemoryRepository, InMemoryRepository.InMemoryRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IMLogger, Logger.Logger>();
+        services.AddScoped<IHasher,SHA256Hasher>();
         services.AddDbContext<SQLServerContext>();
         return services;
     }
