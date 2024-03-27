@@ -17,7 +17,7 @@ public class JwtGenerator : IJwtGenerator
             new Claim(JwtRegisteredClaimNames.Sub,user.username)
         };
 
-        var signing = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("HiBuddy_users"))
+        var signing = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("HiBuddy_users_top_secret_key_ggs"))
             ,SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
@@ -29,7 +29,6 @@ public class JwtGenerator : IJwtGenerator
             signingCredentials:signing);
 
         String tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
-
         return tokenValue;
     }
 }
