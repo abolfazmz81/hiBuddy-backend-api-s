@@ -55,6 +55,14 @@ public class AuthenticationController : ControllerBase
         {
             return BadRequest("user already exists");
         }
+        if (result.Token.Equals("email"))
+        {
+            return BadRequest("user with this email already exits");
+        }
+        if (result.Token.Equals("username"))
+        {
+            return BadRequest("user with this username already exits");
+        }
         return Ok(result);
     }
 }

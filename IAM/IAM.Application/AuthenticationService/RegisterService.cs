@@ -18,12 +18,14 @@ public class RegisterService : IRegisterService
         // check with username
         if (_userRepository.GetByUsername(user.username) is not null)
         {
-            throw new Exception("user with this username already exists");
+            return new AuthResult(new User(), "username");
+            //throw new Exception("user with this username already exists");
         }
         // check with email
         if (_userRepository.GetByEmail(user.email) is not null)
         {
-                throw new Exception("user with this email address already exists");
+            return new AuthResult(new User(), "email");
+            //throw new Exception("user with this email address already exists");
         }
         // create user
         
