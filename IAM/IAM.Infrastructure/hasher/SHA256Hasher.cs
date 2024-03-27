@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using IAM.Application.common;
 
 namespace IAM.Infrastructure.hasher;
 

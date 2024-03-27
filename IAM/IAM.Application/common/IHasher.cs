@@ -1,4 +1,4 @@
-﻿namespace IAM.Infrastructure.hasher;
+﻿namespace IAM.Application.common;
 
 public interface IHasher
 {
