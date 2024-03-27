@@ -16,7 +16,7 @@ public class UserRepository : IUserRepository
     public User? Add(User user)
     {
         _context.Hibuddy_user.Add(user);
-        _context.SaveChangesAsync();
+        _context.SaveChanges();
         return user;
     }
 
