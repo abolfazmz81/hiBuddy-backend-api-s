@@ -24,9 +24,8 @@ public class InMemoryRepository : IInMemoryRepository
         _logger.Log("new code '" + code + "' generated for sign up","AuthPhoneRegister");
     }
 
-    public Boolean Check(string key,String value)
+    public String? Get(string key)
     {
-        String? dbvalue = _db.Get(key);
-        return dbvalue is not null && dbvalue.Equals(value);
+        return  _db.Get(key);
     }
 }

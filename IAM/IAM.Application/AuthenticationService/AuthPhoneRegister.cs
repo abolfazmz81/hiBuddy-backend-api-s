@@ -30,7 +30,15 @@ public class AuthPhoneRegister : IAuthPhoneRegister
 
     public Boolean verify(PhoneAuth phoneAuth)
     {
-        Boolean check = _inMemoryRepository.Check(phoneAuth.phone_number.ToString(), phoneAuth.pass);
-        return check;
+        String? result = _inMemoryRepository.Get(phoneAuth.phone_number.ToString());
+        if (result is null)
+        {
+            throw new Exception("phone number expired, get new code");
+        }
+        else if (!result.Equals(phoneAuth.pass))
+        {
+            throw new Exception("wrong code");
+        }
+        return true;
     }
 }
