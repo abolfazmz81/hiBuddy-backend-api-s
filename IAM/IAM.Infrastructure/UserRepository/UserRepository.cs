@@ -2,7 +2,7 @@
 using IAM.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace IAM.Infrastructure;
+namespace IAM.Infrastructure.UserRepository;
 
 public class UserRepository : IUserRepository
 {
@@ -15,16 +15,24 @@ public class UserRepository : IUserRepository
 
     public User? Add(User user)
     {
-        throw new NotImplementedException();
+        _context.Hibuddy_user.Add(user);
+        _context.SaveChangesAsync();
+        return user;
     }
 
     public User? GetByEmail(string email)
     {
-        throw new NotImplementedException();
+        return _context.Hibuddy_user.SingleOrDefault(user => user.email == email);
     }
 
     public User? GetByPhone(long Phone_number)
     {
        return _context.Hibuddy_user.SingleOrDefault(user => user.phone_number == Phone_number);
+    }
+
+    public User? GetByUsername(string username)
+    {
+        return _context.Hibuddy_user.SingleOrDefault(user => user.username == username);
+
     }
 }
