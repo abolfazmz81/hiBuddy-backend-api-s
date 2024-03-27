@@ -19,8 +19,9 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository.UserRepository>();
         services.AddScoped<IMLogger, Logger.Logger>();
         services.AddScoped<IHasher,SHA256Hasher>();
-        services.AddDbContext<SQLServerContext>();
         services.AddScoped<IJwtGenerator,JwtGenerator>();
+        
+        services.AddDbContext<SQLServerContext>();
         return services;
     }
 }

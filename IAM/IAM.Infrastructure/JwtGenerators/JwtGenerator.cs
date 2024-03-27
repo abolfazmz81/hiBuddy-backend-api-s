@@ -13,7 +13,7 @@ public class JwtGenerator : IJwtGenerator
     {
         var claims = new Claim[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub,user.user_id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sid,user.user_id.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub,user.username)
         };
 
