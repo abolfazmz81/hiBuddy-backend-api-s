@@ -35,4 +35,10 @@ public class UserRepository : IUserRepository
         return _context.Hibuddy_user.SingleOrDefault(user => user.username == username);
 
     }
+
+    public void DelUser(User user)
+    {
+        _context.Hibuddy_user.Remove(user);
+        _context.SaveChanges();
+    }
 }

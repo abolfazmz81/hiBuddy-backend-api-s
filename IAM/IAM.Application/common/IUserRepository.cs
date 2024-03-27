@@ -8,4 +8,5 @@ public interface IUserRepository
     User? GetByEmail(String email);
     User? GetByPhone(long phone_number);
     User? GetByUsername(String username);
+    void DelUser(User user);
 }
