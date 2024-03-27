@@ -6,10 +6,12 @@ namespace IAM.Application.AuthenticationService;
 public class RegisterService : IRegisterService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IJwtGenerator _jwtGenerator;
 
-    public RegisterService(IUserRepository userRepository)
+    public RegisterService(IUserRepository userRepository, IJwtGenerator jwtGenerator)
     {
         _userRepository = userRepository;
+        _jwtGenerator = jwtGenerator;
     }
 
     public AuthResult? Handle(User user)
@@ -32,7 +34,7 @@ public class RegisterService : IRegisterService
         // add user to database
         var newUser = _userRepository.Add(user);
         // create token
-        String token = Guid.NewGuid().ToString();
+        String token = _jwtGenerator.Generate(user,"auth/Register","IAM");
         // return newly created user
         return new AuthResult(newUser, token);
     }

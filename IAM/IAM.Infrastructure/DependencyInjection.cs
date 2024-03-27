@@ -2,12 +2,12 @@
 using IAM.Infrastructure.CodeGenerator;
 using IAM.Infrastructure.hasher;
 using IAM.Infrastructure.InMemoryRepository;
+using IAM.Infrastructure.JwtGenerators;
 using IAM.Infrastructure.Logger;
 using IAM.Infrastructure.UserRepository;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IAM.Infrastructure;
-using IAM.Application.AuthenticationService;
-using Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddScoped<IMLogger, Logger.Logger>();
         services.AddScoped<IHasher,SHA256Hasher>();
         services.AddDbContext<SQLServerContext>();
+        services.AddScoped<IJwtGenerator,JwtGenerator>();
         return services;
     }
 }
