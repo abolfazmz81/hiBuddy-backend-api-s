@@ -65,4 +65,20 @@ public class AuthenticationController : ControllerBase
         }
         return Ok(result);
     }
+
+    [HttpPost("Login")]
+    public ActionResult Login( LoginDetails loginDetails)
+    {
+        var result = _registerService.Login(loginDetails);
+        if (result is null)
+        {
+            return BadRequest("user doesnt exists");
+        }
+
+        if (result.Token.Equals("incorrect"))
+        {
+            return BadRequest("wrong password");
+        }
+        return Ok(result);
+    }
 }
