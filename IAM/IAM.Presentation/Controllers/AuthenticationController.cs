@@ -14,12 +14,14 @@ public class AuthenticationController : ControllerBase
     private readonly IRegisterService _registerService;
     private readonly IAuthPhoneRegister _authPhoneRegister;
     private readonly ILoginService _loginService;
+    private readonly IAuthPhoneVerify _authPhoneVerify;
 
-    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister, ILoginService loginService)
+    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister, ILoginService loginService, IAuthPhoneVerify authPhoneVerify)
     {
         _registerService = registerService;
         _authPhoneRegister = authPhoneRegister;
         _loginService = loginService;
+        _authPhoneVerify = authPhoneVerify;
     }
     
     // phone number related
@@ -41,7 +43,7 @@ public class AuthenticationController : ControllerBase
         {
             return BadRequest("didnt send the code");
         }
-        Boolean result = _authPhoneRegister.verify(phoneAuth);
+        Boolean result = _authPhoneVerify.Handle(phoneAuth);
         if (!result)
         {
             return BadRequest("wrong code");
