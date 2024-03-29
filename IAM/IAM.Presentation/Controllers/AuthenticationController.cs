@@ -13,11 +13,13 @@ public class AuthenticationController : ControllerBase
 {
     private readonly IRegisterService _registerService;
     private readonly IAuthPhoneRegister _authPhoneRegister;
+    private readonly ILoginService _loginService;
 
-    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister)
+    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister, ILoginService loginService)
     {
         _registerService = registerService;
         _authPhoneRegister = authPhoneRegister;
+        _loginService = loginService;
     }
     
     // phone number related
@@ -70,7 +72,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("Login")]
     public ActionResult Login( LoginDetails loginDetails)
     {
-        var result = _registerService.Login(loginDetails);
+        var result = _loginService.Handle(loginDetails);
         if (result is null)
         {
             return BadRequest("user doesnt exists");

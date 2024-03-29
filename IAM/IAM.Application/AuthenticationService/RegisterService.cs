@@ -42,22 +42,5 @@ public class RegisterService : IRegisterService
         return new AuthResult(newUser, token);
     }
 
-    public AuthResult? Login(LoginDetails loginDetails)
-    {
-        // check if user exists
-        User? user = _userRepository.GetByEmail(loginDetails.email);
-        if (user is null)
-        {
-            return null;
-        }
-        // ceck if the password is correct
-        if (user.password.Equals(_hasher.Hash(loginDetails.pass)))
-        {
-            return new AuthResult(new User(), "incorrect");
-        }
-        // generate token
-        String token = _jwtGenerator.Generate(user, "auth/login", "Login");
-        // return token and user
-        return new AuthResult(user, token);
-    }
+    
 }

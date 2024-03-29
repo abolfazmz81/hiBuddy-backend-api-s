@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<IRegisterService, RegisterService>();
         services.AddScoped<IAuthPhoneRegister, AuthPhoneRegister>();
         services.AddScoped<IUserManagement,UserManagement.UserManagement>();
+        services.AddScoped<ILoginService, LoginService>();
         return services;
     }
 }
