@@ -1,4 +1,5 @@
-﻿using IAM.Domain;
+﻿using IAM.Contracts.Authentication;
+using IAM.Domain;
 
 namespace IAM.Application.common;
 
@@ -9,4 +10,5 @@ public interface IUserRepository
     User? GetByPhone(long phone_number);
     User? GetByUsername(String username);
     void DelUser(User user);
+    User CreateUser(SignupAllDetails details);
 }

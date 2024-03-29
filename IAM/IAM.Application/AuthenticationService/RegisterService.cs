@@ -33,7 +33,7 @@ public class RegisterService : IRegisterService
             //throw new Exception("user with this email address already exists");
         }
         // create user
-        var user = _userRepository.creaUser(details);
+        var user = _userRepository.CreateUser(details);
         // add user to database
         var newUser = _userRepository.Add(user);
         // create token

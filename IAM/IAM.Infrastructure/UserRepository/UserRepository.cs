@@ -1,4 +1,5 @@
 ﻿using IAM.Application.common;
+using IAM.Contracts.Authentication;
 using IAM.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,5 +44,24 @@ public class UserRepository : IUserRepository
     {
         _context.Hibuddy_user.Remove(user);
         _context.SaveChanges();
+    }
+
+    public User CreateUser(SignupAllDetails details)
+    {
+        User user = new User();
+        user.username = details.username;
+        user.phone_number = details.phone_number;
+        user.name = details.name;
+        user.password = details.password;
+        user.job = details.job;
+        user.education = details.education;
+        user.pic = details.pic;
+        user.email = details.email;
+        user.hobbies = details.hobbies;
+        user.favorites = details.favorites;
+        user.Date = details.Date;
+        user.gender = details.gender;
+        
+        return user;
     }
 }
