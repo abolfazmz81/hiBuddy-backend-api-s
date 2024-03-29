@@ -24,13 +24,14 @@ public class LoginService: ILoginService
                 return null;
             }
             // ceck if the password is correct
-            if (user.password.Equals(_hasher.Hash(loginDetails.pass)))
+            if (!user.password.Equals(_hasher.Hash(loginDetails.pass)))
             {
                 return new AuthResult(new User(), "incorrect");
             }
             // generate token
             String token = _jwtGenerator.Generate(user, "auth/login", "Login");
             // return token and user
+            user.password = "none";
             return new AuthResult(user, token);
         
     }
