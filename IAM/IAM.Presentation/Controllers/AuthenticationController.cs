@@ -1,4 +1,5 @@
 ﻿using IAM.Application.AuthenticationService;
+using IAM.Contracts.Authentication;
 using IAM.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +49,7 @@ public class AuthenticationController : ControllerBase
     
     // extra information related
     [HttpPost("AddUser")]
-    public ActionResult AddUser(User user)
+    public ActionResult AddUser(SignupAllDetails user)
     {
         var result = _registerService.Handle(user);
         if (result is null)
