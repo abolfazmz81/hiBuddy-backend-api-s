@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IAM.Application\IAM.Application.csproj" />
+      <ProjectReference Include="..\IAM.Domain\IAM.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.17" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.17" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.17" />
+      <PackageReference Include="NRedisStack" Version="0.12.0" />
+    </ItemGroup>
+
+</Project>
