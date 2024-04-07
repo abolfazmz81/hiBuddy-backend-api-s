@@ -32,14 +32,16 @@ public class RegisterService : IRegisterService
             return new AuthResult(new User(), "email");
             //throw new Exception("user with this email address already exists");
         }
+        // get last id
+        int last = _userRepository.GetLastId();
         // create user
-        var user = _userRepository.CreateUser(details);
+        var user = User.Create(last+1, details.username, details.name, details.email, _hasher.Hash(details.password), details.phone_number);
         // add user to database
-        var newUser = _userRepository.Add(user);
+        _userRepository.Add(user);
         // create token
         String token = _jwtGenerator.Generate(user,"auth/Register","IAM");
         // return newly created user
-        return new AuthResult(newUser, token);
+        return new AuthResult(user, token);
     }
 
     
