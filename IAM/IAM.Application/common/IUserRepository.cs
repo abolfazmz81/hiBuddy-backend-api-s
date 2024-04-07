@@ -10,5 +10,4 @@ public interface IUserRepository
     User? GetByPhone(long phone_number);
     User? GetByUsername(String username);
     void DelUser(User user);
-    User CreateUser(SignupAllDetails details);
 }
