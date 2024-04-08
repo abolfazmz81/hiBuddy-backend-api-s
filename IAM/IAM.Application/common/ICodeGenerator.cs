@@ -1,4 +1,4 @@
-﻿namespace IAM.Infrastructure.CodeGenerator;
+﻿namespace IAM.Application.common;
 
 public interface ICodeGenerator
 {

@@ -9,12 +9,16 @@ public class RegisterService : IRegisterService
     private readonly IUserRepository _userRepository;
     private readonly IJwtGenerator _jwtGenerator;
     private readonly IHasher _hasher;
+    private readonly IInMemoryRepository _inMemoryRepository;
+    private readonly ICodeGenerator _codeGenerator;
 
-    public RegisterService(IUserRepository userRepository, IJwtGenerator jwtGenerator, IHasher hasher)
+    public RegisterService(IUserRepository userRepository, IJwtGenerator jwtGenerator, IHasher hasher, IInMemoryRepository inMemoryRepository, ICodeGenerator codeGenerator)
     {
         _userRepository = userRepository;
         _jwtGenerator = jwtGenerator;
         _hasher = hasher;
+        _inMemoryRepository = inMemoryRepository;
+        _codeGenerator = codeGenerator;
     }
 
     public AuthResult? Handle(SignupAllDetails details)
@@ -32,6 +36,16 @@ public class RegisterService : IRegisterService
             return new AuthResult(new User(), "email");
             //throw new Exception("user with this email address already exists");
         }
+        // check phone exists
+        if (_userRepository.GetByPhone(details.phone_number) is not null)
+        {
+            //throw new Exception("user with this phone number already exists");
+            return new AuthResult(new User(), "phone");
+        }
+        // generate random code
+        String code = _codeGenerator.Generator();
+        // add phone in in-memory database
+        _inMemoryRepository.Add(details.phone_number.ToString(),code);
         // get last id
         int last = _userRepository.GetLastId();
         // create user

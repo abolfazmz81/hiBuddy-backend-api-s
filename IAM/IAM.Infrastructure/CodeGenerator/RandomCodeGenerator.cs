@@ -1,4 +1,6 @@
-﻿namespace IAM.Infrastructure.CodeGenerator;
+﻿using IAM.Application.common;
+
+namespace IAM.Infrastructure.CodeGenerator;
 
 public class RandomCodeGenerator : ICodeGenerator
 {

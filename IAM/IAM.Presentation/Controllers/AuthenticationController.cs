@@ -24,17 +24,6 @@ public class AuthenticationController : ControllerBase
         _authPhoneVerify = authPhoneVerify;
     }
     
-    // phone number related
-    [HttpPost("register")]
-    public ActionResult Register(PhoneAuth phoneAuth)
-    {
-        Boolean result = _authPhoneRegister.handle(phoneAuth);
-        if (!result)
-        {
-            return BadRequest("phone number already exists");
-        }
-        return Ok("code generated");
-    }
 
     [HttpPut("TwoStep")]
     public ActionResult TwoStep(PhoneAuth phoneAuth)
@@ -52,7 +41,7 @@ public class AuthenticationController : ControllerBase
     }
     
     // extra information related
-    [HttpPost("AddUser")]
+    [HttpPost("register")]
     public ActionResult AddUser(SignupAllDetails user)
     {
         var result = _registerService.Handle(user);
@@ -67,6 +56,10 @@ public class AuthenticationController : ControllerBase
         if (result.Token.Equals("username"))
         {
             return BadRequest("user with this username already exits");
+        }
+        if (result.Token.Equals("phone"))
+        {
+            return BadRequest("user with this phone number already exits");
         }
         return Ok(result);
     }

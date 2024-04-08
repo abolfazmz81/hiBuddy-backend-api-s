@@ -22,8 +22,9 @@ public class AuthPhoneRegister : IAuthPhoneRegister
             throw new Exception("user with this phone number already exists");
             return false;
         }
+        
         // add phone in in-memory database
-        _inMemoryRepository.Add(phoneAuth.phone_number.ToString());
+        _inMemoryRepository.Add(phoneAuth.phone_number.ToString(),"fake");
         // return True
         return true;
     }

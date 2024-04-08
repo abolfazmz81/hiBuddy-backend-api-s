@@ -17,9 +17,8 @@ public class InMemoryRepository : IInMemoryRepository
         _logger = logger;
     }
 
-    public void Add(string key)
+    public void Add(string key,String code)
     {
-        String code = _codeGenerator.Generator();
         _db.Set(key,code);
         _logger.Log("new code '" + code + "' generated for sign up","AuthPhoneRegister");
     }
