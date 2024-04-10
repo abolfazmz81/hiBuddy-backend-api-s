@@ -2,6 +2,7 @@
 using IAM.Application.AuthenticationService;
 using IAM.Contracts.Authentication;
 using IAM.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IAM.Presentation.Controllers;
@@ -25,6 +26,7 @@ public class AuthenticationController : ControllerBase
     
 
     [HttpPut("Verify")]
+    [Authorize]
     public async Task<ActionResult> Verify(PhoneAuth phoneAuth)
     {
         if (phoneAuth.pass is null)
