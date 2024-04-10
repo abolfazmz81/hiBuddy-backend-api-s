@@ -14,7 +14,7 @@ public class JwtGenerator : IJwtGenerator
         var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sid,user.user_id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Sub,user.username),
+            new Claim(JwtRegisteredClaimNames.Name,user.username),
             new Claim(JwtRegisteredClaimNames.UniqueName,user.phone_number.ToString())
 
         };
@@ -27,7 +27,7 @@ public class JwtGenerator : IJwtGenerator
             audience:"http://localhost:5000",
             claims:claims,
             null,
-            DateTime.Now.AddHours(2),
+            DateTime.Now.AddMinutes(120),
             signingCredentials:signing);
 
         String tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
@@ -42,7 +42,7 @@ public class JwtGenerator : IJwtGenerator
         {
             return null;
         }
-        var res = tokens.Claims.First(c => c.Type.Equals("sub")).Value;
+        var res = tokens.Claims.First(c => c.Type.Equals("name")).Value;
         return res;
     }
 }
