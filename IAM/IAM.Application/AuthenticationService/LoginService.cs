@@ -29,7 +29,7 @@ public class LoginService: ILoginService
                 return new AuthResult(new User(), "incorrect");
             }
             // generate token
-            String token = _jwtGenerator.Generate(user, "auth/login", "Login");
+            String token = _jwtGenerator.Generate(user);
             // return token and user
             user.password = "none";
             return new AuthResult(user, token);

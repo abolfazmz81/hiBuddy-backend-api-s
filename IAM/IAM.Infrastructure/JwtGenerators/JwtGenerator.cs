@@ -9,7 +9,7 @@ namespace IAM.Infrastructure.JwtGenerators;
 
 public class JwtGenerator : IJwtGenerator
 {
-    public string Generate(User user,String issuer,String audience)
+    public string Generate(User user)
     {
         var claims = new Claim[]
         {
@@ -23,11 +23,11 @@ public class JwtGenerator : IJwtGenerator
             ,SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
-            issuer:issuer,
-            audience:audience,
+            issuer:"http://localhost:5000",
+            audience:"http://localhost:5000",
             claims:claims,
             null,
-            DateTime.Now.AddMinutes(30),
+            DateTime.Now.AddHours(2),
             signingCredentials:signing);
 
         String tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
