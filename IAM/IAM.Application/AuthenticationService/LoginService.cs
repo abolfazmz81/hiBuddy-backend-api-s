@@ -18,7 +18,7 @@ public class LoginService: ILoginService
     public AuthResult? Handle(LoginDetails loginDetails)
     {
             // check if user exists
-            User? user = _userRepository.GetByEmail(loginDetails.email);
+            User? user = _userRepository.GetByEmail(loginDetails.email).Result;
             if (user is null)
             {
                 return null;

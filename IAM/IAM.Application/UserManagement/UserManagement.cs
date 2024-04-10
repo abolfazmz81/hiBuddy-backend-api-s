@@ -21,13 +21,13 @@ public class UserManagement : IUserManagement
     public String DeleteUser(AuthResult details)
     {
         // check if user exists
-        User? user = _userRepository.GetByUsername(details.User.username);
+        User? user = _userRepository.GetByUsername(details.User.username).Result;
         if (user is null)
         {
             return "not exists";
         }
         // check token calidation
-        if (user.username.Equals(_jwtGenerator.GetUsername(details.Token)))
+        if (user.phone_number.Equals(_userRepository.GetByUsername(_jwtGenerator.GetUsername(details.Token)).Result.phone_number))
         {
             return "invalid token";
         }
