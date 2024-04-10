@@ -47,10 +47,15 @@ public class UserRepository : IUserRepository
         return test.Value;
     }
 
+    public async Task Update(User user)
+    { 
+        _context.Hibuddy_user.Update(user);
+    }
+
     public async Task DelUser(User user)
     {
         _context.Hibuddy_user.Remove(user);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     

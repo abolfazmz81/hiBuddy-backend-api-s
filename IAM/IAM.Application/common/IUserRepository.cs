@@ -10,5 +10,6 @@ public interface IUserRepository
     Task<User?> GetByPhone(long phone_number);
     Task<User?> GetByUsername(String username);
     Task<int> GetLastId();
+    Task Update(User user);
     Task DelUser(User user);
 }
