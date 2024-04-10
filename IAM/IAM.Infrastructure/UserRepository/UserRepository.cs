@@ -50,6 +50,7 @@ public class UserRepository : IUserRepository
     public async Task Update(User user)
     { 
         _context.Hibuddy_user.Update(user);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DelUser(User user)
