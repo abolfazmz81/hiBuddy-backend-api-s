@@ -5,16 +5,18 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using IAM.Application;
 using IAM.Infrastructure;
+using IAM.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddApplication().AddInfrastructure();
+builder.Services.AddApplication().AddInfrastructure().AddPresentation();
 
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -28,6 +30,7 @@ builder.Services.AddSwaggerGen(options =>
     //var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
 builder.Services.AddCors(options =>{
     options.AddPolicy("AllowOrigin",builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());});
 
@@ -46,6 +49,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowOrigin");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
