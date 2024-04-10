@@ -16,12 +16,14 @@ public class AuthenticationController : ControllerBase
     private readonly IRegisterService _registerService;
     private readonly ILoginService _loginService;
     private readonly IAuthPhoneVerify _authPhoneVerify;
+    private readonly INewCode _newCode;
 
-    public AuthenticationController(IRegisterService registerService, ILoginService loginService, IAuthPhoneVerify authPhoneVerify)
+    public AuthenticationController(IRegisterService registerService, ILoginService loginService, IAuthPhoneVerify authPhoneVerify, INewCode newCode)
     {
         _registerService = registerService;
         _loginService = loginService;
         _authPhoneVerify = authPhoneVerify;
+        _newCode = newCode;
     }
     
 
@@ -41,7 +43,6 @@ public class AuthenticationController : ControllerBase
         return Ok("phone verified");
     }
     
-    // extra information related
     [HttpPost("Register")]
     public async Task<ActionResult> Register(SignupAllDetails user)
     {
@@ -65,6 +66,15 @@ public class AuthenticationController : ControllerBase
         return Ok(result);
     }
 
+    // extra information related
+    [HttpPost("NewCode")]
+    public async Task<ActionResult> NewCode(PhoneAuth phoneAuth)
+    {
+        await _newCode.Generate(phoneAuth);
+        
+        return Ok("code generated");
+    }
+    
     [HttpPost("Login")]
     public ActionResult Login( LoginDetails loginDetails)
     {
