@@ -23,7 +23,7 @@ public static class DependencyInjection
             Secret = "HiBuddy_users_top_secret_key_ggs",
             Issuer = "http://localhost:5000",
             Audience = "http://localhost:5000",
-            ExpiryMinutes = 120
+            ExpiryMinutes = 60*24*15
         };
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(o =>

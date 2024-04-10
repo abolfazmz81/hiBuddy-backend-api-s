@@ -27,7 +27,7 @@ public class JwtGenerator : IJwtGenerator
             audience:"http://localhost:5000",
             claims:claims,
             null,
-            DateTime.Now.AddMinutes(120),
+            DateTime.Now.AddMinutes(60*24*15),
             signingCredentials:signing);
 
         String tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
