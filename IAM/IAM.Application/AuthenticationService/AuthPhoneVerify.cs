@@ -18,7 +18,7 @@ public class AuthPhoneVerify : IAuthPhoneVerify
 
     public async Task<bool> Handle(PhoneAuth phoneAuth)
     {
-        // extract phone number from token
+        // extract username from token
         String? username = _jwtGenerator.GetUsername(phoneAuth.token);
         // check if token or phone number is valid
         if (username is null)
