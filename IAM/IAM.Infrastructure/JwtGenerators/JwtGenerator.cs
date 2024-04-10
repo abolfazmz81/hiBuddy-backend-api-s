@@ -34,7 +34,7 @@ public class JwtGenerator : IJwtGenerator
         return tokenValue;
     }
 
-    public string GetUsername(string token)
+    public string? GetUsername(string token)
     {
         var handler = new JwtSecurityTokenHandler();
         var tokens = handler.ReadJwtToken(token);
