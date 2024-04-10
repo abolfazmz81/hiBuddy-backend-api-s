@@ -12,27 +12,25 @@ namespace IAM.Presentation.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IRegisterService _registerService;
-    private readonly IAuthPhoneRegister _authPhoneRegister;
     private readonly ILoginService _loginService;
     private readonly IAuthPhoneVerify _authPhoneVerify;
 
-    public AuthenticationController(IRegisterService registerService, IAuthPhoneRegister authPhoneRegister, ILoginService loginService, IAuthPhoneVerify authPhoneVerify)
+    public AuthenticationController(IRegisterService registerService, ILoginService loginService, IAuthPhoneVerify authPhoneVerify)
     {
         _registerService = registerService;
-        _authPhoneRegister = authPhoneRegister;
         _loginService = loginService;
         _authPhoneVerify = authPhoneVerify;
     }
     
 
     [HttpPut("TwoStep")]
-    public ActionResult TwoStep(PhoneAuth phoneAuth)
+    public async Task<ActionResult> TwoStep(PhoneAuth phoneAuth)
     {
         if (phoneAuth.pass is null)
         {
             return BadRequest("didnt send the code");
         }
-        Boolean result = _authPhoneVerify.Handle(phoneAuth);
+        Boolean result =await _authPhoneVerify.Handle(phoneAuth);
         if (!result)
         {
             return BadRequest("wrong code");
@@ -42,9 +40,9 @@ public class AuthenticationController : ControllerBase
     
     // extra information related
     [HttpPost("register")]
-    public ActionResult AddUser(SignupAllDetails user)
+    public async Task<ActionResult> Register(SignupAllDetails user)
     {
-        var result = _registerService.Handle(user);
+        var result =await _registerService.Handle(user);
         if (result is null)
         {
             return BadRequest("user already exists");
