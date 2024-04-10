@@ -5,10 +5,10 @@ namespace IAM.Application.common;
 
 public interface IUserRepository
 {
-    void Add(User user);
-    User? GetByEmail(String email);
-    User? GetByPhone(long phone_number);
-    User? GetByUsername(String username);
-    int GetLastId();
-    void DelUser(User user);
+    Task Add(User user);
+    Task<User?> GetByEmail(String email);
+    Task<User?> GetByPhone(long phone_number);
+    Task<User?> GetByUsername(String username);
+    Task<int> GetLastId();
+    Task DelUser(User user);
 }

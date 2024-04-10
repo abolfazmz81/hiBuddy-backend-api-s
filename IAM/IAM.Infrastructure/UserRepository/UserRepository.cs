@@ -14,31 +14,31 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public void Add(User user)
+    public async Task Add(User user)
     {
         _context.Hibuddy_user.Add(user);
         _context.SaveChanges();
     }
 
-    public User? GetByEmail(string email)
+    public async Task<User?> GetByEmail(string email)
     {
         return _context.Hibuddy_user.SingleOrDefault(user => user.email == email);
     }
 
-    public User? GetByPhone(long Phone_number)
+    public async Task<User?> GetByPhone(long Phone_number)
     {
        return _context.Hibuddy_user.SingleOrDefault(user => user.phone_number == Phone_number);
     }
 
-    public User? GetByUsername(string username)
+    public async Task<User?> GetByUsername(string username)
     {
         return _context.Hibuddy_user.SingleOrDefault(user => user.username == username);
 
     }
 
-    public int GetLastId()
+    public async Task<int> GetLastId()
     {
-        int? test =  _context.Hibuddy_user.Max(u => (int?)u.user_id);
+        int? test = _context.Hibuddy_user.Max(u => (int?)u.user_id);
         if (test is null)
         {
             return 0;
@@ -47,7 +47,7 @@ public class UserRepository : IUserRepository
         return test.Value;
     }
 
-    public void DelUser(User user)
+    public async Task DelUser(User user)
     {
         _context.Hibuddy_user.Remove(user);
         _context.SaveChanges();
