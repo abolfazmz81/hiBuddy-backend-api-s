@@ -15,10 +15,10 @@ public class LoginService: ILoginService
         _jwtGenerator = jwtGenerator;
         _hasher = hasher;
     }
-    public AuthResult? Handle(LoginDetails loginDetails)
+    public async Task<AuthResult?> Handle(LoginDetails loginDetails)
     {
             // check if user exists
-            User? user = _userRepository.GetByEmail(loginDetails.email).Result;
+            User? user = await _userRepository.GetByEmail(loginDetails.email);
             if (user is null)
             {
                 return null;
@@ -31,8 +31,6 @@ public class LoginService: ILoginService
             // generate token
             String token = _jwtGenerator.Generate(user);
             // return token and user
-            user.password = "none";
             return new AuthResult(user, token);
-        
     }
 }

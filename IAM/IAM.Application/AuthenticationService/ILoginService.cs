@@ -2,5 +2,5 @@
 
 public interface ILoginService
 {
-    AuthResult? Handle(LoginDetails loginDetails);
+    Task<AuthResult?> Handle(LoginDetails loginDetails);
 }

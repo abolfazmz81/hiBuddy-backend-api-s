@@ -76,9 +76,9 @@ public class AuthenticationController : ControllerBase
     }
     
     [HttpPost("Login")]
-    public ActionResult Login( LoginDetails loginDetails)
+    public async Task<ActionResult >Login( LoginDetails loginDetails)
     {
-        var result = _loginService.Handle(loginDetails);
+        var result = await _loginService.Handle(loginDetails);
         if (result is null)
         {
             return BadRequest("user doesnt exists");
