@@ -1,4 +1,5 @@
-﻿using IAM.Application.AuthenticationService;
+﻿using System.IdentityModel.Tokens.Jwt;
+using IAM.Application.AuthenticationService;
 using IAM.Contracts.Authentication;
 using IAM.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,8 @@ public class AuthenticationController : ControllerBase
     }
     
 
-    [HttpPut("TwoStep")]
-    public async Task<ActionResult> TwoStep(PhoneAuth phoneAuth)
+    [HttpPut("Verify")]
+    public async Task<ActionResult> Verify(PhoneAuth phoneAuth)
     {
         if (phoneAuth.pass is null)
         {
@@ -39,7 +40,7 @@ public class AuthenticationController : ControllerBase
     }
     
     // extra information related
-    [HttpPost("register")]
+    [HttpPost("Register")]
     public async Task<ActionResult> Register(SignupAllDetails user)
     {
         var result =await _registerService.Handle(user);
