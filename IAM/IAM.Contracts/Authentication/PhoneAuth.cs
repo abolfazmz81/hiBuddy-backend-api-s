@@ -1,6 +1,6 @@
-﻿namespace IAM.Domain;
+﻿namespace IAM.Contracts.Authentication;
 
 public record PhoneAuth(
-    long phone_number ,
+    String token ,
      String? pass 
 );
