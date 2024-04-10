@@ -14,7 +14,9 @@ public class JwtGenerator : IJwtGenerator
         var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sid,user.user_id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Sub,user.username)
+            new Claim(JwtRegisteredClaimNames.Sub,user.username),
+            new Claim(JwtRegisteredClaimNames.UniqueName,user.phone_number.ToString())
+
         };
 
         var signing = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("HiBuddy_users_top_secret_key_ggs"))
