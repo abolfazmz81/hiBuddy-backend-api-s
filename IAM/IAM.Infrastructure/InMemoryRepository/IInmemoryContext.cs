@@ -2,6 +2,6 @@
 
 public interface IInmemoryContext
 {
-    void Set(String key,String value);
-    String? Get(String key);
+    Task Set(String key,String value);
+    Task<String?> Get(String key);
 }

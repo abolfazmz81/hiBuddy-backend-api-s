@@ -2,6 +2,6 @@
 
 public interface IInMemoryRepository
 {
-    void Add(String key,String code);
-    String? Get(String key);
+    Task Add(String key,String code);
+    Task<String?> Get(String key);
 }

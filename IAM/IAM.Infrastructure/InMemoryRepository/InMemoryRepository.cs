@@ -17,14 +17,14 @@ public class InMemoryRepository : IInMemoryRepository
         _logger = logger;
     }
 
-    public void Add(string key,String code)
+    public async Task Add(string key,String code)
     {
-        _db.Set(key,code);
+        await _db.Set(key,code);
         _logger.Log("new code '" + code + "' generated for sign up","AuthPhoneRegister");
     }
 
-    public String? Get(string key)
+    public async Task<String?> Get(string key)
     {
-        return  _db.Get(key);
+        return await _db.Get(key);
     }
 }
