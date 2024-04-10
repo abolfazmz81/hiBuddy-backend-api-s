@@ -1,8 +1,8 @@
 ﻿using IAM.Domain;
-
+using IAM.Contracts.Authentication;
 namespace IAM.Application.AuthenticationService;
 
 public interface IAuthPhoneVerify
 {
-    Boolean Handle(PhoneAuth phoneAuth);
+    Task<bool> Handle(PhoneAuth phoneAuth);
 }
