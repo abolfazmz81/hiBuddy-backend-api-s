@@ -5,6 +5,6 @@ namespace IAM.Application.AuthenticationService;
 
 public interface IRegisterService
 {
-    AuthResult? Handle(SignupAllDetails details);
+    Task<AuthResult?> Handle(SignupAllDetails details);
     
 }
