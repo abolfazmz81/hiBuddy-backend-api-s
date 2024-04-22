@@ -7,7 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Media.Contracts\Media.Contracts.csproj" />
       <ProjectReference Include="..\Media.Domain\Media.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     </ItemGroup>
 
 </Project>
