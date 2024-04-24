@@ -5,5 +5,5 @@ namespace Media.Application.Media;
 
 public interface ISaveMedia
 {
-    Task Handle(MediaFile file);
+    Task<String> Handle(MediaFile file);
 }
