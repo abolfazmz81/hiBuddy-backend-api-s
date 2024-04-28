@@ -22,7 +22,7 @@ public class SaveMedia : ISaveMedia
         }
         // check the files type
         
-        // save the file to the correct table
+        // save the file to the correct table(using Content_Type attribute)
         
         // return the address to be saved in main database
         return "ok";
