@@ -1,10 +1,13 @@
-﻿using Media.Contracts;
+﻿using Media.Application.Common;
+using Media.Contracts;
 
 namespace Media.Application.Media;
 
 public class SaveMedia : ISaveMedia
 {
-    public async Task<string> Handle(MediaFile file)
+    
+
+    public async Task<string> Handle(MediaFile file,String token)
     {
         // check if token is valid
         
