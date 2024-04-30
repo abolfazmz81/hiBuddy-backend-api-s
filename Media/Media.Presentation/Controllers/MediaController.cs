@@ -32,8 +32,15 @@ public class MediaController: ControllerBase
             Content = file.OpenReadStream()
         };
 
-        await _saveMedia.Handle(mediaFile);
-
+        String ou = await _saveMedia.Handle(mediaFile,"token");
+        if (ou.Equals("failed"))
+        {
+            return BadRequest("invalid token");
+        }
+        if (ou.Equals("wrong"))
+        {
+            return BadRequest("wrong type");
+        }
         return Ok();
     }
 }
