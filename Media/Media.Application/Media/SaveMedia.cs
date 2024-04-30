@@ -16,12 +16,16 @@ public class SaveMedia : ISaveMedia
     {
         // check if token is valid
         String? user = _jwtChecker.get_Username(token);
+        user = "scot";
         if (user is null)
         {
             return "failed";
         }
         // check the files type
-        
+        if (file.ContentType.Split("/")[0] is not ("image" or "video"))
+        {
+            return "wrong";
+        }
         // save the file to the correct table(using Content_Type attribute)
         
         // return the address to be saved in main database
