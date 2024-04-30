@@ -8,7 +8,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<IJWTChecker, JWTChecker>();        
+        services.AddScoped<IJWTChecker, JWTChecker>();
+        services.AddScoped<IMediaRepository, MediaRepository.MediaRepository>();
         return services;
     }
 }

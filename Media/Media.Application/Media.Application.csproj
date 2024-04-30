@@ -12,9 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\" />
+        <Folder Include="Common\" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
