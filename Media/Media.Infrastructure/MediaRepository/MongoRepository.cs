@@ -12,13 +12,16 @@ public class MongoRepository : IMongoRepository
 
     public async Task<BsonDocument> CreateDoc(MediaFile file, string username)
     {
+        var memory = new MemoryStream();
+        await file.Content.CopyToAsync(memory);
+        byte[] image = memory.ToArray();
         BsonDocument document = new BsonDocument
         {
             {"_id",new BsonArray{"Row_id",2}},
             {"User_name",username},
             {"File_name",file.FileName},
             {"Content_Type",file.ContentType},
-            {"Content",file.Content.ToString()},
+            {"Content",image},
         };
         return document;
     }
