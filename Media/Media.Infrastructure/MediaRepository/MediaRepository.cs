@@ -15,8 +15,18 @@ public class MediaRepository : IMediaRepository
 
     public async Task<string> Add(MediaFile file, string username)
     {
+        var doc = _mongoRepository.CreateDoc(file, username).Result;
+        try
+        {
+            await _mongoRepository.Insert(doc);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return "failed";
+        }
         
-        var doc = _mongoRepository.CreateDoc(file, username);
+        Console.WriteLine(doc.ToString());
         return "ok";
     }
 }
