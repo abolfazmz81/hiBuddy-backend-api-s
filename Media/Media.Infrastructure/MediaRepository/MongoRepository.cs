@@ -10,6 +10,11 @@ public class MongoRepository : IMongoRepository
     private static IMongoDatabase database = client.GetDatabase("HiBuddy");
     private static IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("");
 
+    public async Task Insert(BsonDocument doc)
+    {
+        await collection.InsertOneAsync(doc);
+    }
+
     public async Task<BsonDocument> CreateDoc(MediaFile file, string username)
     {
         var memory = new MemoryStream();
