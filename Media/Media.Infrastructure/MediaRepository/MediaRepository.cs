@@ -25,8 +25,6 @@ public class MediaRepository : IMediaRepository
             Console.WriteLine(e);
             return "failed";
         }
-        
-        Console.WriteLine(doc.ToString());
         return "ok";
     }
 }

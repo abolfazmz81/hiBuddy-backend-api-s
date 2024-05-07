@@ -8,7 +8,7 @@ public class MongoRepository : IMongoRepository
 {
     private static MongoClient client = new MongoClient("mongodb://127.0.0.1:27017");
     private static IMongoDatabase database = client.GetDatabase("HiBuddy");
-    private static IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("");
+    private static IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("Media");
 
     public async Task Insert(BsonDocument doc)
     {
@@ -22,7 +22,7 @@ public class MongoRepository : IMongoRepository
         byte[] image = memory.ToArray();
         BsonDocument document = new BsonDocument
         {
-            {"_id",new BsonArray{"Row_id",2}},
+            {"_id",2},
             {"User_name",username},
             {"File_name",file.FileName},
             {"Content_Type",file.ContentType},
