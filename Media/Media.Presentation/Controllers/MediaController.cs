@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Media.Application.Media;
 using Media.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Media.Presentation.Controllers;
@@ -19,6 +20,7 @@ public class MediaController: ControllerBase
     }
     
     [HttpPut("Save")]
+    [Authorize]
     public async Task<ActionResult> Save(IFormFile file)
     {
         if (file == null || file.Length == 0)
@@ -31,8 +33,9 @@ public class MediaController: ControllerBase
             ContentType = file.ContentType,
             Content = file.OpenReadStream()
         };
-
-        String ou = await _saveMedia.Handle(mediaFile,"token");
+        string token = HttpContext.Request.Headers.Authorization;
+        token = token.Split(" ")[1];
+        String ou = await _saveMedia.Handle(mediaFile,token);
         if (ou.Equals("failed"))
         {
             return BadRequest("invalid token");

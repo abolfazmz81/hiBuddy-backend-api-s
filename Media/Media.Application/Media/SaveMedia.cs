@@ -17,7 +17,7 @@ public class SaveMedia : ISaveMedia
     {
         // check if token is valid
         String? user = _jwtChecker.get_Username(token);
-        user = "scot";
+        Console.WriteLine(user);
         if (user is null)
         {
             return "failed";
@@ -27,8 +27,14 @@ public class SaveMedia : ISaveMedia
         {
             return "wrong";
         }
+        // create media object to insert
+        
         // save the file to the correct table(using Content_Type attribute)
-        await _mediaRepository.Add(file, user);
+        string res = await _mediaRepository.Add(file, user);
+        if (res.Equals("failed"))
+        {
+            return "failed";
+        }
         // return the address to be saved in main database
         return "ok";
     }
