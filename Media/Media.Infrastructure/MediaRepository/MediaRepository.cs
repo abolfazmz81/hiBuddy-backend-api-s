@@ -13,9 +13,9 @@ public class MediaRepository : IMediaRepository
         _mongoRepository = mongoRepository;
     }
 
-    public async Task<string> Add(MediaFile file, string username)
+    public async Task<string> Add(Domain.Media media)
     {
-        var doc = _mongoRepository.CreateDoc(file, username).Result;
+        var doc = await _mongoRepository.CreateDoc(media);
         try
         {
             await _mongoRepository.Insert(doc);
@@ -26,5 +26,22 @@ public class MediaRepository : IMediaRepository
             return "failed";
         }
         return "ok";
+    }
+
+    public async Task<int> GetLastId()
+    {
+        var docs =await _mongoRepository.GetAllDocs();
+        int max = 0;
+        foreach (var VARIABLE in docs)
+        {
+            Console.WriteLine(VARIABLE[0]);
+            if (VARIABLE[0].AsInt32 > max)
+            {
+                max = VARIABLE[0].AsInt32;
+            }
+
+        }
+
+        return max + 1;
     }
 }

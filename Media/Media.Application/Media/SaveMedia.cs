@@ -17,7 +17,6 @@ public class SaveMedia : ISaveMedia
     {
         // check if token is valid
         String? user = _jwtChecker.get_Username(token);
-        Console.WriteLine(user);
         if (user is null)
         {
             return "failed";
@@ -27,13 +26,15 @@ public class SaveMedia : ISaveMedia
         {
             return "wrong";
         }
+        // get the last id
+        int max = await _mediaRepository.GetLastId();
         // create media object to insert
-        
+        var media = Domain.Media.Create(max, user, file.FileName, file.ContentType, file.Content);
         // save the file to the correct table(using Content_Type attribute)
-        string res = await _mediaRepository.Add(file, user);
+        string res = await _mediaRepository.Add(media);
         if (res.Equals("failed"))
         {
-            return "failed";
+            return "bad";
         }
         // return the address to be saved in main database
         return "ok";
