@@ -15,17 +15,17 @@ public class MongoRepository : IMongoRepository
         await collection.InsertOneAsync(doc);
     }
 
-    public async Task<BsonDocument> CreateDoc(MediaFile file, string username)
+    public async Task<BsonDocument> CreateDoc(Domain.Media media)
     {
         var memory = new MemoryStream();
-        await file.Content.CopyToAsync(memory);
+        await media.Content.CopyToAsync(memory);
         byte[] image = memory.ToArray();
         BsonDocument document = new BsonDocument
         {
-            {"_id",2},
-            {"User_name",username},
-            {"File_name",file.FileName},
-            {"Content_Type",file.ContentType},
+            {"_id",media.Row_id},
+            {"User_name",media.User_name},
+            {"File_name",media.File_name},
+            {"Content_Type",media.Content_type},
             {"Content",image},
         };
         return document;
