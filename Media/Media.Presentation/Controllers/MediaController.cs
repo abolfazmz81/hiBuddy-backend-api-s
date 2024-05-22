@@ -44,6 +44,10 @@ public class MediaController: ControllerBase
         {
             return BadRequest("wrong type");
         }
+        if (ou.Equals("bad"))
+        {
+            return BadRequest("an error happened, try again");
+        }
         return Ok();
     }
 }
