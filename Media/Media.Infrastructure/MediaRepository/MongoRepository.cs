@@ -30,4 +30,10 @@ public class MongoRepository : IMongoRepository
         };
         return document;
     }
+
+    public async Task<List<BsonDocument>> GetAllDocs()
+    {
+        var docs = collection.Find(new BsonDocument()).ToList();
+        return docs;
+    }
 }
