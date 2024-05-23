@@ -13,10 +13,12 @@ public class MediaController: ControllerBase
 {
     
     private readonly ISaveMedia _saveMedia;
+    private readonly IGetMedia _getMedia;
 
-    public MediaController(ISaveMedia saveMedia)
+    public MediaController(ISaveMedia saveMedia, IGetMedia getMedia)
     {
         _saveMedia = saveMedia;
+        _getMedia = getMedia;
     }
     
     [HttpPut("Save")]
@@ -50,5 +52,17 @@ public class MediaController: ControllerBase
             return BadRequest("an error happened, try again");
         }
         return Ok();
+    }
+
+    [HttpGet("GetMedia")]
+    [Authorize]
+    public async Task<ActionResult> GetMedia(String Filename)
+    {
+        string token = HttpContext.Request.Headers.Authorization;
+        token = token.Split(" ")[1];
+        var media = await _getMedia.GetFile(token, Filename);
+        
+        IFormFile file = new FormFile(media.Content,0,media.Content.Length,media.Name,media.FileName);
+        return Ok(file);
     }
 }
