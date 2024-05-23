@@ -24,6 +24,7 @@ public class MongoRepository : IMongoRepository
         {
             {"_id",media.Row_id},
             {"User_name",media.User_name},
+            {"Name",media.Name},
             {"File_name",media.File_name},
             {"Content_Type",media.Content_type},
             {"Content",image},

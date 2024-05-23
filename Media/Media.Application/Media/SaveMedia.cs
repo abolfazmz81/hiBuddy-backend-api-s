@@ -29,7 +29,7 @@ public class SaveMedia : ISaveMedia
         // get the last id
         int max = await _mediaRepository.GetLastId();
         // create media object to insert
-        var media = Domain.Media.Create(max, user, file.FileName, file.ContentType, file.Content);
+        var media = Domain.Media.Create(max, user,file.Name ,file.FileName, file.ContentType, file.Content);
         // save the file to the correct table(using Content_Type attribute)
         string res = await _mediaRepository.Add(media);
         if (res.Equals("failed"))

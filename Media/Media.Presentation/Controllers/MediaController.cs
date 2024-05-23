@@ -30,6 +30,7 @@ public class MediaController: ControllerBase
         var mediaFile = new MediaFile
         {
             FileName = file.FileName,
+            Name = file.Name,
             ContentType = file.ContentType,
             Content = file.OpenReadStream()
         };
