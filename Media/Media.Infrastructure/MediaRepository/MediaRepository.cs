@@ -44,4 +44,14 @@ public class MediaRepository : IMediaRepository
 
         return max + 1;
     }
+    public async Task<MediaFile> CreateMedia(BsonDocument file)
+    {
+        MediaFile mediaFile = new MediaFile();
+        mediaFile.Name = file[2].ToString();
+        mediaFile.FileName = file[3].ToString();
+        mediaFile.ContentType = file[4].ToString();
+        Byte[] stream = file[5].AsByteArray;
+        mediaFile.Content = new MemoryStream(stream);
+        return mediaFile;
+    }
 }
