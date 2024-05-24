@@ -15,7 +15,7 @@ public class GetMedia : IGetMedia
         _jwtChecker = jwtChecker;
     }
 
-    public async Task<MediaFile> GetFile(string token, string fileName)
+    public async Task<MediaFile?> GetFile(string token, string fileName)
     {
         // check if token is valid
         String? user = _jwtChecker.get_Username(token);
