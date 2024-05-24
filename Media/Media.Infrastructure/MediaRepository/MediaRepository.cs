@@ -44,6 +44,13 @@ public class MediaRepository : IMediaRepository
 
         return max + 1;
     }
+
+    public async Task<BsonDocument> GetDoc(string username, string fileName)
+    {
+        BsonDocument doc =await _mongoRepository.GetDoc(username, fileName);
+        return doc;
+    }
+
     public async Task<MediaFile> CreateMedia(BsonDocument file)
     {
         MediaFile mediaFile = new MediaFile();
