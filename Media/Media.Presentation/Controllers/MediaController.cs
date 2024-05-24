@@ -60,9 +60,12 @@ public class MediaController: ControllerBase
     {
         string token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
-        var media = await _getMedia.GetFile(token, Filename);
-        
-        IFormFile file = new FormFile(media.Content,0,media.Content.Length,media.Name,media.FileName);
-        return Ok(file);
+        MediaFile? media = await _getMedia.GetFile(token, Filename);
+        if (media is null)
+        {
+            return NotFound("correct token or file not found");
+        }
+        media.Content.Position = 0;
+        return File(media.Content, media.ContentType, media.FileName);
     }
 }
