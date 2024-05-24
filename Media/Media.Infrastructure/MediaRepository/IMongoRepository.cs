@@ -8,4 +8,5 @@ public interface IMongoRepository
     Task Insert(BsonDocument doc);
     Task<BsonDocument> CreateDoc(Domain.Media media);
     Task<List<BsonDocument>> GetAllDocs();
+    Task<BsonDocument> GetDoc(String user, String fileName);
 }
