@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<INewCode, NewCode>();
         services.AddScoped<IUserManagement,UserManagement.UserManagement>();
         services.AddScoped<ILoginService, LoginService>();
+        services.AddScoped<ITokenCheck, TokenCheck>();
         return services;
     }
 }
