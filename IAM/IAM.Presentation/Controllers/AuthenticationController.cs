@@ -17,13 +17,15 @@ public class AuthenticationController : ControllerBase
     private readonly ILoginService _loginService;
     private readonly IAuthPhoneVerify _authPhoneVerify;
     private readonly INewCode _newCode;
+    private readonly ITokenCheck _tokenCheck;
 
-    public AuthenticationController(IRegisterService registerService, ILoginService loginService, IAuthPhoneVerify authPhoneVerify, INewCode newCode)
+    public AuthenticationController(IRegisterService registerService, ILoginService loginService, IAuthPhoneVerify authPhoneVerify, INewCode newCode, ITokenCheck tokenCheck)
     {
         _registerService = registerService;
         _loginService = loginService;
         _authPhoneVerify = authPhoneVerify;
         _newCode = newCode;
+        _tokenCheck = tokenCheck;
     }
     
 
@@ -89,5 +91,17 @@ public class AuthenticationController : ControllerBase
             return BadRequest("wrong password");
         }
         return Ok(result);
+    }
+    
+    // called by other api's
+    [HttpPost("CheckToken")]
+    public async Task<ActionResult> Check([FromBody] String token)
+    {
+        String? user = await _tokenCheck.Handle(token);
+        if (user is not null)
+        {
+            return Ok(user);
+        }
+        return BadRequest();
     }
 }
