@@ -1,8 +1,10 @@
 ﻿using System.Net;
+using System.Text;
 using Media.Application.Media;
 using Media.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Media.Presentation.Controllers;
 
@@ -14,11 +16,14 @@ public class MediaController: ControllerBase
     
     private readonly ISaveMedia _saveMedia;
     private readonly IGetMedia _getMedia;
+    private readonly HttpClient _httpClient;
+    private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
-    public MediaController(ISaveMedia saveMedia, IGetMedia getMedia)
+    public MediaController(ISaveMedia saveMedia, IGetMedia getMedia, HttpClient httpClient)
     {
         _saveMedia = saveMedia;
         _getMedia = getMedia;
+        _httpClient = httpClient;
     }
     
     [HttpPut("Save")]
@@ -60,6 +65,28 @@ public class MediaController: ControllerBase
     {
         string token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
+        try
+        {
+            string jsonToken = JsonConvert.SerializeObject(token);
+            // create http content to send
+            HttpContent content = new StringContent(jsonToken, Encoding.UTF8, "application/json");
+            // send request using post
+            HttpResponseMessage response = await _httpClient.PostAsync(checkUrl, content);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("invalid token provided");
+            }
+
+            token = await response.Content.ReadAsStringAsync();
+            token = token.Remove(0, 1).Remove(token.Length - 2);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest("wrong token");
+        }
+        
         MediaFile? media = await _getMedia.GetFile(token, Filename);
         if (media is null)
         {

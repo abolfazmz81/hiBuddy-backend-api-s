@@ -4,5 +4,5 @@ namespace Media.Application.Media;
 
 public interface IGetMedia
 {
-    public Task<MediaFile?> GetFile(String token, String fileName);
+    public Task<MediaFile?> GetFile(String user, String fileName);
 }

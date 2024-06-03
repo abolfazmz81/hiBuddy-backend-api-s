@@ -15,17 +15,11 @@ public class GetMedia : IGetMedia
         _jwtChecker = jwtChecker;
     }
 
-    public async Task<MediaFile?> GetFile(string token, string fileName)
+    public async Task<MediaFile?> GetFile(string user, string fileName)
     {
-        // check if token is valid
-        String? user = _jwtChecker.get_Username(token);
-        if (user is null)
-        { 
-            return null;
-        }
         // get the desired document
         BsonDocument? file = await _mediaRepository.GetDoc(user, fileName);
-        if (file.IsBsonNull)
+        if (file is null)
         {
             return null;
         }
