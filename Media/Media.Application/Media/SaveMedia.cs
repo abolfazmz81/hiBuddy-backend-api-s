@@ -13,14 +13,8 @@ public class SaveMedia : ISaveMedia
         _mediaRepository = mediaRepository;
     }
 
-    public async Task<string> Handle(MediaFile file,String token)
+    public async Task<string> Handle(MediaFile file,String user)
     {
-        // check if token is valid
-        String? user = _jwtChecker.get_Username(token);
-        if (user is null)
-        {
-            return "failed";
-        }
         // check the files type
         if (file.ContentType.Split("/")[0] is not ("image" or "video"))
         {
