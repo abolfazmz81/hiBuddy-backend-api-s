@@ -12,6 +12,7 @@ public static class DependencyInjection
     {
         services.AddSwagger();
         services.AddAuth();
+        services.AddHttpClient();
         return services;
     }
     
