@@ -19,7 +19,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 builder.Services.AddCors(options =>{
-    options.AddPolicy("AllowOrigin",builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());});
+    options.AddPolicy("AllowOrigin",builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:5002").AllowAnyMethod().AllowAnyHeader());
+});
 
 var app = builder.Build();
 
