@@ -16,6 +16,13 @@ public class UserManagementController : ControllerBase
     private readonly IDeleteUser _deleteUser;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
+    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, string checkUrl)
+    {
+        _httpClient = httpClient;
+        _deleteUser = deleteUser;
+        this.checkUrl = checkUrl;
+    }
+
     [HttpDelete("delete")]
     [Authorize]
     public async Task<ActionResult> DeleteUser(String password)
