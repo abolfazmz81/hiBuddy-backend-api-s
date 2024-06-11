@@ -17,9 +17,6 @@ public class UserManagementController : ControllerBase
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
     [HttpDelete("delete")]
-    public async Task<ActionResult> DeleteUser(String token)
-    {
-        
     [Authorize]
     public async Task<ActionResult> DeleteUser()
     {
@@ -46,6 +43,12 @@ public class UserManagementController : ControllerBase
         {
             Console.WriteLine(e);
             return BadRequest("wrong token");
+        }
+
+        String res = await _deleteUser.delete(token);
+        if (res == "wrong")
+        {
+            return BadRequest("the user does not exist");
         }
         return Ok("");
     }
