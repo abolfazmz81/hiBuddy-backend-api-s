@@ -2,7 +2,7 @@
 
 public class DeleteUser : IDeleteUser
 {
-    public Task<string> delete(string token)
+    public Task<string> delete(string token,String password)
     {
         throw new NotImplementedException();
     }

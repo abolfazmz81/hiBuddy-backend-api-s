@@ -18,7 +18,7 @@ public class UserManagementController : ControllerBase
 
     [HttpDelete("delete")]
     [Authorize]
-    public async Task<ActionResult> DeleteUser()
+    public async Task<ActionResult> DeleteUser(String password)
     {
         string? token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
@@ -45,7 +45,7 @@ public class UserManagementController : ControllerBase
             return BadRequest("wrong token");
         }
 
-        String res = await _deleteUser.delete(token);
+        String res = await _deleteUser.delete(token,password);
         if (res == "wrong")
         {
             return BadRequest("the user does not exist");

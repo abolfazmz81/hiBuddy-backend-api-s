@@ -2,5 +2,5 @@
 
 public interface IDeleteUser
 {
-    public Task<String> delete(String token);
+    public Task<String> delete(String token,String password);
 }
