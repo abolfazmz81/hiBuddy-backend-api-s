@@ -20,6 +20,10 @@ public class UserManagementController : ControllerBase
     [Authorize]
     public async Task<ActionResult> DeleteUser(String password)
     {
+        if (password == "")
+        {
+            return BadRequest("no password provided");
+        }
         string? token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
         
@@ -45,10 +49,14 @@ public class UserManagementController : ControllerBase
             return BadRequest("wrong token");
         }
 
-        String res = await _deleteUser.delete(token,password);
-        if (res == "wrong")
+        String result = await _deleteUser.delete(token,password);
+        if (result.Equals("not exists"))
         {
-            return BadRequest("the user does not exist");
+            return BadRequest("user with this token doesnt exists");
+        }
+        if (result.Equals("wrong password"))
+        {
+            return BadRequest("password is incorrect");
         }
         return Ok("");
     }
