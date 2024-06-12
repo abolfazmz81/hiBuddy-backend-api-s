@@ -32,26 +32,15 @@ public class UserManagementController : ControllerBase
         }
         string? token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
-        
-        try
-        {
-            string jsonToken = JsonConvert.SerializeObject(token);
-            // create http content to send
-            HttpContent content = new StringContent(jsonToken, Encoding.UTF8, "application/json");
-            // send request using post
-            HttpResponseMessage response = await _httpClient.PostAsync(checkUrl, content);
-            
-            if (!response.IsSuccessStatusCode)
-            {
-                return BadRequest("invalid token provided");
-            }
 
-            token = await response.Content.ReadAsStringAsync();
-            token = token.Remove(0, 1).Remove(token.Length - 2);
-        }
-        catch (Exception e)
+        token = await CheckToken(token);
+        if (token.Equals("invalid token provided"))
         {
-            Console.WriteLine(e);
+            return BadRequest("invalid token provided");
+        }
+
+        if (token.Equals("wrong token"))
+        {
             return BadRequest("wrong token");
         }
 
@@ -65,5 +54,31 @@ public class UserManagementController : ControllerBase
             return BadRequest("password is incorrect");
         }
         return Ok("");
+    }
+    // token check function
+    private async Task<String> CheckToken(String token)
+    {
+        try
+        {
+            string jsonToken = JsonConvert.SerializeObject(token);
+            // create http content to send
+            HttpContent content = new StringContent(jsonToken, Encoding.UTF8, "application/json");
+            // send request using post
+            HttpResponseMessage response = await _httpClient.PostAsync(checkUrl, content);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return "invalid token provided";
+            }
+
+            token = await response.Content.ReadAsStringAsync();
+            token = token.Remove(0, 1).Remove(token.Length - 2);
+            return token;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return "wrong token";
+        }
     }
 }
