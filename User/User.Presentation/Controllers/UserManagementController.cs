@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using User.Application.UserManagement;
+using User.Contracts;
 
 namespace User.Presentation.Controllers;
 
@@ -14,14 +15,16 @@ public class UserManagementController : ControllerBase
     
     private readonly HttpClient _httpClient;
     private readonly IDeleteUser _deleteUser;
+    private readonly IAddInfo _addInfo;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
-    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser)
+    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo)
     {
         _httpClient = httpClient;
         _deleteUser = deleteUser;
+        _addInfo = addInfo;
     }
-
+    // delete user
     [HttpDelete("delete")]
     [Authorize]
     public async Task<ActionResult> DeleteUser([FromBody]String password)
@@ -30,6 +33,7 @@ public class UserManagementController : ControllerBase
         {
             return BadRequest("no password provided");
         }
+        //extract token from header
         string? token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
 
@@ -55,6 +59,16 @@ public class UserManagementController : ControllerBase
         }
         return Ok("");
     }
+
+
+    [HttpPut("AddInfo")]
+    [Authorize]
+    public async Task<ActionResult> AddInfo(Info info)
+    {
+        String result = await _addInfo.AddInfo(info);
+        return Ok();
+    }
+    
     // token check function
     private async Task<String> CheckToken(String token)
     {
