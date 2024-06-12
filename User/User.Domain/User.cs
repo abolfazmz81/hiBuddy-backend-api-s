@@ -19,4 +19,6 @@ public class User
     public String? Date { get; set; }
     public String? gender { get; set; }
     public bool isverified { get; set; }
+    public String? profile_pic {get;set;}
+
 }
