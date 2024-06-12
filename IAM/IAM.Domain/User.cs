@@ -18,7 +18,6 @@ public class User
     public String? Date { get; set; }
     public String? gender { get; set; }
     public bool isverified { get; set; }
-    public String? profile_pic {get;set;}
 
     public static User Create(int id,String username,String name,String email, String password,long number)
     {
