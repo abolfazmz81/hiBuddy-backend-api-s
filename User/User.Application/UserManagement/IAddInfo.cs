@@ -4,5 +4,5 @@ namespace User.Application.UserManagement;
 
 public interface IAddInfo
 {
-    public Task<String> AddInfo(Info info);
+    public Task<String> addInfo(String username,Info info);
 }

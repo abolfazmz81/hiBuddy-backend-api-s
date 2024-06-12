@@ -65,7 +65,6 @@ public class UserManagementController : ControllerBase
     [Authorize]
     public async Task<ActionResult> AddInfo(Info info)
     {
-        String result = await _addInfo.AddInfo(info);
         //extract token from header
         string? token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
@@ -78,6 +77,12 @@ public class UserManagementController : ControllerBase
         if (token.Equals("wrong token"))
         {
             return BadRequest("wrong token");
+        }
+        
+        String result = await _addInfo.addInfo(token,info);
+        if (result.Equals("not exists"))
+        {
+            return BadRequest("user with this token doesnt exists");
         }
         return Ok();
     }
