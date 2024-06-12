@@ -66,6 +66,19 @@ public class UserManagementController : ControllerBase
     public async Task<ActionResult> AddInfo(Info info)
     {
         String result = await _addInfo.AddInfo(info);
+        //extract token from header
+        string? token = HttpContext.Request.Headers.Authorization;
+        token = token.Split(" ")[1];
+
+        token = await CheckToken(token);
+        if (token.Equals("invalid token provided"))
+        {
+            return BadRequest("invalid token provided");
+        }
+        if (token.Equals("wrong token"))
+        {
+            return BadRequest("wrong token");
+        }
         return Ok();
     }
     
