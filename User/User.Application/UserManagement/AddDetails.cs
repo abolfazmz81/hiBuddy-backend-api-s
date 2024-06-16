@@ -17,7 +17,7 @@ public class AddDetails : IAddDetails
         Domain.User? user = await _userRepository.GetByUsername(username);
         if (user is null)
         {
-            return "not exits";
+            return "not exists";
         }
         // check for not duplicate username
         Domain.User? newuser = await _userRepository.GetByUsername(info.username);

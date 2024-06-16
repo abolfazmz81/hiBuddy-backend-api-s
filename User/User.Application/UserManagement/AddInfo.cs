@@ -18,7 +18,7 @@ public class AddInfo : IAddInfo
         Domain.User? user = await _userRepository.GetByUsername(username);
         if (user is null)
         {
-            return "not exits";
+            return "not exists";
         }
         // update user
         await _userRepository.UpdateInfo(user, info);
