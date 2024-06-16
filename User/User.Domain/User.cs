@@ -4,7 +4,6 @@ namespace User.Domain;
 
 public class User
 {
-    [Key]
     public int user_id { get; set; }
     public String username { get; set; }
     public long phone_number { get; set; }

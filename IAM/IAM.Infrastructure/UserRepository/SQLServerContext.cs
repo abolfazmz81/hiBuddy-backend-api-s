@@ -9,6 +9,14 @@ public class SQLServerContext : DbContext
     public SQLServerContext(DbContextOptions<SQLServerContext> options) : base(options)
     {
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configure the composite primary key
+        modelBuilder.Entity<Domain.User>()
+            .HasKey(ul => ul.user_id);
+    }
 
     public virtual DbSet<User> Hibuddy_user { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
