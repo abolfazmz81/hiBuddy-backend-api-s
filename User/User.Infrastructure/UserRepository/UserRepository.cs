@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using User.Application.common;
 using User.Contracts;
+using User.Domain;
 
 namespace User.Infrastructure.UserRepository;
 
@@ -19,6 +20,12 @@ public class UserRepository : IUserRepository
 
     public async Task DelUser(Domain.User user)
     {
+        User_location? userLocation = await _context.user_locations.SingleOrDefaultAsync(u => u.user_id == user.user_id);
+        if (userLocation is not null)
+        {
+            _context.user_locations.Remove(userLocation);
+            await _context.SaveChangesAsync();
+        }
         _context.Hibuddy_user.Remove(user);
         await _context.SaveChangesAsync();    
     }
