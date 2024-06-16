@@ -20,7 +20,8 @@ public class UserRepository : IUserRepository
     public async Task DelUser(Domain.User user)
     {
         _context.Hibuddy_user.Remove(user);
-        await _context.SaveChangesAsync();    }
+        await _context.SaveChangesAsync();    
+    }
 
     public async Task UpdateInfo(Domain.User user, Info info)
     {
@@ -28,6 +29,17 @@ public class UserRepository : IUserRepository
         user.favorites = info.favorites;
         user.hobbies = info.hobbies;
         user.job = info.job;
+        _context.Hibuddy_user.Update(user);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateDetails(Domain.User user, Additional info)
+    {
+        user.username = info.username;
+        user.gender = info.gender;
+        user.pic = info.pic;
+        user.Date = info.Date;
+        user.name = info.name;
         _context.Hibuddy_user.Update(user);
         await _context.SaveChangesAsync();
     }
