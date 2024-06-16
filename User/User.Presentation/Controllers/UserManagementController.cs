@@ -16,13 +16,15 @@ public class UserManagementController : ControllerBase
     private readonly HttpClient _httpClient;
     private readonly IDeleteUser _deleteUser;
     private readonly IAddInfo _addInfo;
+    private readonly IAddDetails _addDetails;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
-    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo)
+    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails)
     {
         _httpClient = httpClient;
         _deleteUser = deleteUser;
         _addInfo = addInfo;
+        _addDetails = addDetails;
     }
     // delete user
     [HttpDelete("delete")]
@@ -60,7 +62,7 @@ public class UserManagementController : ControllerBase
         return Ok("");
     }
 
-
+    // add additional info
     [HttpPut("AddInfo")]
     [Authorize]
     public async Task<ActionResult> AddInfo(Info info)
@@ -83,6 +85,31 @@ public class UserManagementController : ControllerBase
         if (result.Equals("not exists"))
         {
             return BadRequest("user with this token doesnt exists");
+        }
+        return Ok();
+    }
+
+    [HttpPut("AddDetails")]
+    [Authorize]
+    public async Task<ActionResult> AddDetails(Additional info)
+    {
+        //extract token from header
+        string? token = HttpContext.Request.Headers.Authorization;
+        token = token.Split(" ")[1];
+
+        token = await CheckToken(token);
+        if (token.Equals("invalid token provided"))
+        {
+            return BadRequest("invalid token provided");
+        }
+        if (token.Equals("wrong token"))
+        {
+            return NotFound("wrong token");
+        }
+        String res = await _addDetails.addDetails(token,info);
+        if (res.Equals("not exists"))
+        {
+            return NotFound("user with this token doesnt exists");
         }
         return Ok();
     }
