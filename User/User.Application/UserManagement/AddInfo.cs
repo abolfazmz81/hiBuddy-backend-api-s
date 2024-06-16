@@ -14,7 +14,7 @@ public class AddInfo : IAddInfo
 
     public async Task<string> addInfo(String username,Info info)
     {
-        // get user by id 
+        // get user by username
         Domain.User? user = await _userRepository.GetByUsername(username);
         if (user is null)
         {
