@@ -8,4 +8,6 @@ public interface IUserRepository
     public Task DelUser(Domain.User user);
     public Task UpdateInfo(Domain.User user, Info info);
 
+    public Task UpdateDetails(Domain.User user, Additional info);
+
 }

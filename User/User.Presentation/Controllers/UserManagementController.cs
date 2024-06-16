@@ -111,7 +111,11 @@ public class UserManagementController : ControllerBase
         {
             return NotFound("user with this token doesnt exists");
         }
-        return Ok();
+        if (res.Equals("user with this username already exists"))
+        {
+            return BadRequest(res);
+        }
+        return Ok("done");
     }
     
     // token check function
