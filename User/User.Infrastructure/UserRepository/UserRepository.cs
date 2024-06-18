@@ -43,7 +43,7 @@ public class UserRepository : IUserRepository
 
     public async Task<Domain.User> UpdateDetails(Domain.User user, Additional info)
     {
-        user.username = info.username;
+        //user.username = info.username;
         user.gender = info.gender;
         user.pic = info.pic;
         user.Date = info.Date;

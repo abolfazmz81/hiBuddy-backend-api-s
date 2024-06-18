@@ -19,12 +19,15 @@ public class AddDetails : IAddDetails
         {
             return null;
         }
-        // check for not duplicate username
+        /*// check for not duplicate username
         Domain.User? newuser = await _userRepository.GetByUsername(info.username);
         if ((newuser is not null) && (newuser.username != user.username))
         {
-            return "user with this username already exists";
-        }
+            return new Domain.User
+            {
+                user_id = -1
+            };
+        }*/
         // update user
         Domain.User nuser = await _userRepository.UpdateDetails(user, info);
         return nuser;
