@@ -1,6 +1,8 @@
-﻿namespace User.Application.UserManagement;
+﻿using System.Collections;
+
+namespace User.Application.UserManagement;
 
 public interface IGetNear
 {
-    public Task<Array?> getAll(String username);
+    public Task<ArrayList?> getAll(String username);
 }

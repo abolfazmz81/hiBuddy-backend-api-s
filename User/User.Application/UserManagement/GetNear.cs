@@ -1,4 +1,5 @@
-﻿using User.Application.common;
+﻿using System.Collections;
+using User.Application.common;
 
 namespace User.Application.UserManagement;
 
@@ -11,7 +12,7 @@ public class GetNear : IGetNear
         _userRepository = userRepository;
     }
 
-    public async Task<Array?> getAll(string username)
+    public async Task<ArrayList?> getAll(string username)
     {
         // get user by username from user table
         Domain.User? user = await _userRepository.GetByUsername(username);
@@ -20,7 +21,7 @@ public class GetNear : IGetNear
             return null;
         }
         // get near users
-        Array res = await _userRepository.GetNear(user);
+        ArrayList res = await _userRepository.GetNear(user);
         return res;
     }
 }

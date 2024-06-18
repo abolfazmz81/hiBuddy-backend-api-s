@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -139,7 +140,7 @@ public class UserManagementController : ControllerBase
             return NotFound("wrong token");
         }
 
-        Array? result = await _getNear.getAll(token);
+        ArrayList? result = await _getNear.getAll(token);
         if (result is null)
         {
             return NotFound("user with this token doesnt exists");
