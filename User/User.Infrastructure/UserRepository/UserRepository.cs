@@ -30,7 +30,7 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();    
     }
 
-    public async Task UpdateInfo(Domain.User user, Info info)
+    public async Task<Domain.User> UpdateInfo(Domain.User user, Info info)
     {
         user.education = info.education;
         user.favorites = info.favorites;
@@ -38,9 +38,10 @@ public class UserRepository : IUserRepository
         user.job = info.job;
         _context.Hibuddy_user.Update(user);
         await _context.SaveChangesAsync();
+        return user;
     }
 
-    public async Task UpdateDetails(Domain.User user, Additional info)
+    public async Task<Domain.User> UpdateDetails(Domain.User user, Additional info)
     {
         user.username = info.username;
         user.gender = info.gender;
@@ -49,5 +50,6 @@ public class UserRepository : IUserRepository
         user.name = info.name;
         _context.Hibuddy_user.Update(user);
         await _context.SaveChangesAsync();
+        return user;
     }
 }

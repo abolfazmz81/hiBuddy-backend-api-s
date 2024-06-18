@@ -11,13 +11,13 @@ public class AddDetails : IAddDetails
     {
         _userRepository = userRepository;
     }
-    public async Task<string> addDetails(string username, Additional info)
+    public async Task<Domain.User?> addDetails(string username, Additional info)
     {
         // get user by username
         Domain.User? user = await _userRepository.GetByUsername(username);
         if (user is null)
         {
-            return "not exists";
+            return null;
         }
         // check for not duplicate username
         Domain.User? newuser = await _userRepository.GetByUsername(info.username);
@@ -26,7 +26,7 @@ public class AddDetails : IAddDetails
             return "user with this username already exists";
         }
         // update user
-        await _userRepository.UpdateDetails(user, info);
-        return "ok";
+        Domain.User nuser = await _userRepository.UpdateDetails(user, info);
+        return nuser;
     }
 }

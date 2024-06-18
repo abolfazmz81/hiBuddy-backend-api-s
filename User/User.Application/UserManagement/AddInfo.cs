@@ -12,16 +12,16 @@ public class AddInfo : IAddInfo
         _userRepository = userRepository;
     }
 
-    public async Task<string> addInfo(String username,Info info)
+    public async Task<Domain.User?> addInfo(String username,Info info)
     {
         // get user by username
         Domain.User? user = await _userRepository.GetByUsername(username);
         if (user is null)
         {
-            return "not exists";
+            return null;
         }
         // update user
-        await _userRepository.UpdateInfo(user, info);
-        return "ok";
+        Domain.User nuser = await _userRepository.UpdateInfo(user, info);
+        return nuser;
     }
 }

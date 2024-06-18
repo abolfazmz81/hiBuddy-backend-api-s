@@ -6,8 +6,8 @@ public interface IUserRepository
 {
     public Task<Domain.User?> GetByUsername(String username);
     public Task DelUser(Domain.User user);
-    public Task UpdateInfo(Domain.User user, Info info);
+    public Task<Domain.User> UpdateInfo(Domain.User user, Info info);
 
-    public Task UpdateDetails(Domain.User user, Additional info);
+    public Task<Domain.User> UpdateDetails(Domain.User user, Additional info);
 
 }

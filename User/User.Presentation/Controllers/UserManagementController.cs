@@ -18,7 +18,6 @@ public class UserManagementController : ControllerBase
     private readonly IAddInfo _addInfo;
     private readonly IAddDetails _addDetails;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
-
     public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails)
     {
         _httpClient = httpClient;
@@ -81,12 +80,12 @@ public class UserManagementController : ControllerBase
             return BadRequest("wrong token");
         }
         
-        String result = await _addInfo.addInfo(token,info);
-        if (result.Equals("not exists"))
+        Domain.User? result = await _addInfo.addInfo(token,info);
+        if (result is null)
         {
             return BadRequest("user with this token doesnt exists");
         }
-        return Ok();
+        return Ok(result);
     }
 
     [HttpPut("AddDetails")]
@@ -106,16 +105,16 @@ public class UserManagementController : ControllerBase
         {
             return NotFound("wrong token");
         }
-        String res = await _addDetails.addDetails(token,info);
-        if (res.Equals("not exists"))
+        Domain.User res = await _addDetails.addDetails(token,info);
+        if (res is null)
         {
             return NotFound("user with this token doesnt exists");
         }
-        if (res.Equals("user with this username already exists"))
+       /* if (res.user_id == -1)
         {
             return BadRequest(res);
-        }
-        return Ok("done");
+        }*/
+        return Ok(res);
     }
     
     // token check function
