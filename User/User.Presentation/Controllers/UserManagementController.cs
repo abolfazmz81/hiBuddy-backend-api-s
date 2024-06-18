@@ -17,13 +17,15 @@ public class UserManagementController : ControllerBase
     private readonly IDeleteUser _deleteUser;
     private readonly IAddInfo _addInfo;
     private readonly IAddDetails _addDetails;
+    private readonly IGetNear _getNear;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
-    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails)
+    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails, IGetNear getNear)
     {
         _httpClient = httpClient;
         _deleteUser = deleteUser;
         _addInfo = addInfo;
         _addDetails = addDetails;
+        _getNear = getNear;
     }
     // delete user
     [HttpDelete("delete")]
@@ -87,7 +89,8 @@ public class UserManagementController : ControllerBase
         }
         return Ok(result);
     }
-
+    
+    // add important details
     [HttpPut("AddDetails")]
     [Authorize]
     public async Task<ActionResult> AddDetails(Additional info)
@@ -117,6 +120,32 @@ public class UserManagementController : ControllerBase
         return Ok(res);
     }
     
+    // get all near user
+    [HttpGet("GetNear")]
+    [Authorize]
+    public async Task<IActionResult> GetNear()
+    {
+        //extract token from header
+        string? token = HttpContext.Request.Headers.Authorization;
+        token = token.Split(" ")[1];
+        // check token validation
+        token = await CheckToken(token);
+        if (token.Equals("invalid token provided"))
+        {
+            return BadRequest("invalid token provided");
+        }
+        if (token.Equals("wrong token"))
+        {
+            return NotFound("wrong token");
+        }
+
+        Array? result = await _getNear.getAll(token);
+        if (result is null)
+        {
+            return NotFound("user with this token doesnt exists");
+        }
+        return Ok(result);
+    }
     // token check function
     private async Task<String> CheckToken(String token)
     {
