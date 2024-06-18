@@ -12,6 +12,7 @@ public class SQLServerContext : DbContext
 
     public virtual DbSet<Domain.User> Hibuddy_user { get; set; }
     public virtual DbSet<User_location> user_locations { get; set; }
+    public virtual DbSet<locations> locations { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,6 +23,8 @@ public class SQLServerContext : DbContext
             .HasKey(ul => new { ul.user_id, ul.location_id });
         modelBuilder.Entity<Domain.User>()
             .HasKey(ul => ul.user_id);
+        modelBuilder.Entity<Domain.locations>()
+            .HasKey(l => l.location_id);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
