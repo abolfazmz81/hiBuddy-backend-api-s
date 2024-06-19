@@ -6,7 +6,7 @@ namespace Media.Infrastructure.MediaRepository;
 
 public class MongoRepository : IMongoRepository
 {
-    private static MongoClient client = new MongoClient("mongodb://127.0.0.1:27017");
+    private static MongoClient client = new MongoClient("mongodb://host.docker.internal:27017");
     private static IMongoDatabase database = client.GetDatabase("HiBuddy");
     private static IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("Media");
 

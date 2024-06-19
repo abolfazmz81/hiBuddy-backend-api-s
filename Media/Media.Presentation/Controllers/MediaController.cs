@@ -18,7 +18,7 @@ public class MediaController: ControllerBase
     private readonly IGetMedia _getMedia;
     private readonly HttpClient _httpClient;
     private readonly IDeleteMedia _deleteMedia;
-    private string checkUrl = "http://localhost:5000/auth/CheckToken";
+    private string checkUrl = "http://host.docker.internal:5000/auth/CheckToken";
 
     public MediaController(ISaveMedia saveMedia, IGetMedia getMedia, HttpClient httpClient, IDeleteMedia deleteMedia)
     {
