@@ -61,7 +61,7 @@ public class RabbitMQConsumer : BackgroundService
         var client = _httpClientFactory.CreateClient();
 
         // Adjust the URL as necessary for your specific controller and method
-        var url = $"http://localhost:5002/Media/DeleteAll?username={message}";
+        var url = $"http://host.docker.internal:5002/Media/DeleteAll?username={message}";
 
         var response = await client.DeleteAsync(url); // or GetAsync based on your method
         if (response.IsSuccessStatusCode)
