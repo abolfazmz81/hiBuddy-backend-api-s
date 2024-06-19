@@ -8,6 +8,7 @@ public static class DependencyInjection
     {
         services.AddScoped<ISaveMedia, SaveMedia>();
         services.AddScoped<IGetMedia,GetMedia>();
+        services.AddScoped<IDeleteMedia, DeleteMedia>();
         return services;
     }
 }

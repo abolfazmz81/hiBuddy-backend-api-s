@@ -46,4 +46,11 @@ public class MongoRepository : IMongoRepository
         BsonDocument doc = collection.Find(combined).FirstOrDefault().ToBsonDocument();
         return doc;
     }
+
+    public async Task<string?> DeleteAll(string user)
+    {
+        var deletefilter = Builders<BsonDocument>.Filter.Eq("User_name", user);
+        collection.DeleteMany(deletefilter);
+        return "ok";
+    }
 }

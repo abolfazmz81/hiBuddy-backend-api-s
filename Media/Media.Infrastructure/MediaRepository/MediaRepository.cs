@@ -61,4 +61,10 @@ public class MediaRepository : IMediaRepository
         mediaFile.Content = new MemoryStream(stream);
         return mediaFile;
     }
+
+    public async Task<string?> Delete(string username)
+    {
+        String? res = await _mongoRepository.DeleteAll(username);
+        return "ok";
+    }
 }
