@@ -40,9 +40,9 @@ public class MongoRepository : IMongoRepository
 
     public async Task<BsonDocument> GetDoc(string user, string fileName)
     {
-        var filter1 = Builders<BsonDocument>.Filter.Eq("User_name", user);
+        //var filter1 = Builders<BsonDocument>.Filter.Eq("User_name", user);
         var filter2 = Builders<BsonDocument>.Filter.Eq("File_name", fileName);
-        var combined = Builders<BsonDocument>.Filter.And(filter1, filter2);
+        var combined = Builders<BsonDocument>.Filter.And(filter2);
         BsonDocument doc = collection.Find(combined).FirstOrDefault().ToBsonDocument();
         return doc;
     }

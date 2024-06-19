@@ -86,10 +86,10 @@ public class MediaController: ControllerBase
     }
 
     [HttpGet("GetMedia")]
-    [Authorize]
+    //[Authorize]
     public async Task<ActionResult> GetMedia(String Filename)
     {
-        string token = HttpContext.Request.Headers.Authorization;
+       /* string token = HttpContext.Request.Headers.Authorization;
         token = token.Split(" ")[1];
         try
         {
@@ -111,9 +111,9 @@ public class MediaController: ControllerBase
         {
             Console.WriteLine(e);
             return BadRequest("wrong token");
-        }
+        }*/
         
-        MediaFile? media = await _getMedia.GetFile(token, Filename);
+        MediaFile? media = await _getMedia.GetFile("token", Filename);
         if (media is null)
         {
             return NotFound("correct token or file not found");
