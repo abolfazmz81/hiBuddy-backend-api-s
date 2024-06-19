@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 using User.Application.UserManagement;
 using User.Contracts;
 using User.Domain;
@@ -20,14 +21,16 @@ public class UserManagementController : ControllerBase
     private readonly IAddInfo _addInfo;
     private readonly IAddDetails _addDetails;
     private readonly IGetNear _getNear;
+    private readonly IConfiguration _configuration;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
-    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails, IGetNear getNear)
+    public UserManagementController(HttpClient httpClient, IDeleteUser deleteUser, IAddInfo addInfo, IAddDetails addDetails, IGetNear getNear, IConfiguration configuration)
     {
         _httpClient = httpClient;
         _deleteUser = deleteUser;
         _addInfo = addInfo;
         _addDetails = addDetails;
         _getNear = getNear;
+        _configuration = configuration;
     }
     // delete user
     [HttpDelete("delete")]
@@ -62,6 +65,23 @@ public class UserManagementController : ControllerBase
         {
             return BadRequest("password is incorrect");
         }
+        // send message via RabbitMQ
+        var factory = new ConnectionFactory()
+        {
+            HostName = _configuration["RabbitMQ:Host"]
+        };
+        var connection = factory.CreateConnection();
+        var channel = connection.CreateModel();
+        channel.QueueDeclare(queue: _configuration["RabbitMQ:Queue"],
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
+        var message = Encoding.UTF8.GetBytes("user " + token + " deleted");
+        channel.BasicPublish(exchange: "",
+            routingKey: _configuration["RabbitMQ:Queue"],
+            basicProperties: null,
+            body: message);
         return Ok("");
     }
 
