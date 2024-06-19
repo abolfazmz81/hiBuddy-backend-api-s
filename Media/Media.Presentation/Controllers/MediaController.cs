@@ -17,13 +17,15 @@ public class MediaController: ControllerBase
     private readonly ISaveMedia _saveMedia;
     private readonly IGetMedia _getMedia;
     private readonly HttpClient _httpClient;
+    private readonly IDeleteMedia _deleteMedia;
     private string checkUrl = "http://localhost:5000/auth/CheckToken";
 
-    public MediaController(ISaveMedia saveMedia, IGetMedia getMedia, HttpClient httpClient)
+    public MediaController(ISaveMedia saveMedia, IGetMedia getMedia, HttpClient httpClient, IDeleteMedia deleteMedia)
     {
         _saveMedia = saveMedia;
         _getMedia = getMedia;
         _httpClient = httpClient;
+        _deleteMedia = deleteMedia;
     }
     
     [HttpPut("Save")]
@@ -118,5 +120,12 @@ public class MediaController: ControllerBase
         }
         media.Content.Position = 0;
         return File(media.Content, media.ContentType, media.FileName);
+    }
+
+    [HttpDelete("DeleteAll")]
+    public async Task<ActionResult> DeleteAll(String username)
+    {
+        String? res = await _deleteMedia.Delete(username);
+        return Ok();
     }
 }
