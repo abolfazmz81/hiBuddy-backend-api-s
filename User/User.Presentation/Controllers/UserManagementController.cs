@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using User.Application.UserManagement;
 using User.Contracts;
+using User.Domain;
 
 namespace User.Presentation.Controllers;
 
@@ -122,9 +123,9 @@ public class UserManagementController : ControllerBase
     }
     
     // get all near user
-    [HttpGet("GetNear")]
+    [HttpPost("GetNear")]
     [Authorize]
-    public async Task<IActionResult> GetNear()
+    public async Task<IActionResult> GetNear(locations location)
     {
         //extract token from header
         string? token = HttpContext.Request.Headers.Authorization;
@@ -140,7 +141,7 @@ public class UserManagementController : ControllerBase
             return NotFound("wrong token");
         }
 
-        ArrayList? result = await _getNear.getAll(token);
+        ArrayList? result = await _getNear.getAll(token,location);
         if (result is null)
         {
             return NotFound("user with this token doesnt exists");
