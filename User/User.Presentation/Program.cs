@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>{
     options.AddPolicy("AllowOrigin",builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
-    options.AddPolicy("AllowOrigin",
+    options.AddPolicy("AllowOrigin2",
         builder => builder.WithOrigins("http://localhost:5002").AllowAnyMethod().AllowAnyHeader());
 });
 
@@ -25,6 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowOrigin").UseCors("AllowOrigin2");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
